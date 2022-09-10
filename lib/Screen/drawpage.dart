@@ -1,3 +1,4 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_animation_transition/animations/right_to_left_transition.dart';
@@ -80,13 +81,37 @@ class _DrawpageState extends State<Drawpage> {
       }
     };
   }
+  bool themeLight=true;
+  dynamic savedThememode;
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getCurrentTheme();
+  }
+  Future getCurrentTheme() async{
+    savedThememode =await AdaptiveTheme.getThemeMode();
+    if(savedThememode.toString()=='AdaptiveThemeMode.dark'){
+      setState(() {
+        themeLight=false;
+        print("Darkmode");
+      });
+    }
+    else
+    {
+      setState(() {
+        themeLight=true;
+        print("LightMode");
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.whitecolor,
-      bottomSheet: Container(
-        color: Color.fromARGB(234, 248, 248, 251),
+      //backgroundColor: AppColor.whitecolor,
+      bottomSheet: SizedBox(
+        //color: Color.fromARGB(234, 248, 248, 251),
         height: 40,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -95,7 +120,7 @@ class _DrawpageState extends State<Drawpage> {
                 onPressed: () {},
                 child: Text(
                   'Paramètres',
-                  style: TextStyle(color: AppColor.blackcolor, fontSize: 16),
+                  style: TextStyle( fontSize: 16),
                 )),
             TextButton(
                 onPressed: () {
@@ -103,16 +128,16 @@ class _DrawpageState extends State<Drawpage> {
                 },
                 child: Text('Langues',
                     style:
-                        TextStyle(color: AppColor.blackcolor, fontSize: 16))),
+                        TextStyle( fontSize: 16))),
           ],
         ),
       ),
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Color.fromARGB(234, 248, 248, 251),
+      //  backgroundColor: Color.fromARGB(234, 248, 248, 251),
         title: Text(
           "Livre du prophète Kacou Philippe",
-          style: TextStyle(color: AppColor.blackcolor, fontSize: 17),
+          style: TextStyle(fontSize: 17),
         ),
         centerTitle: true,
         elevation: 1,
@@ -124,11 +149,30 @@ class _DrawpageState extends State<Drawpage> {
             child: ListView(
               padding: EdgeInsets.zero,
               children: [
-                AppBarTile(
-                    index: 2,
-                    onTap: updateState(0),
-                    title: 'Biographie',
-                    icon: Icons.person_outline),
+               SizedBox(
+      height: 50,
+      child: ListTile(
+        onTap: () {
+        
+        },
+        leading:Text(''),
+        trailing:(themeLight)?TextButton.icon(onPressed:(){
+          setState(() {
+            themeLight=!themeLight;
+                        (themeLight)? AdaptiveTheme.of(context).setLight():   AdaptiveTheme.of(context).setDark();
+
+          });
+        }, icon:Icon(CupertinoIcons.sun_max_fill,size:27,), label:Text('Light',style:TextStyle(fontSize:15),)):TextButton.icon(onPressed:(){
+           setState(() {
+            themeLight=!themeLight;
+            (themeLight)? AdaptiveTheme.of(context).setLight():   AdaptiveTheme.of(context).setDark();
+          });
+        }, icon:Icon(CupertinoIcons.moon_fill,size:27), label:Text('Dark',style:TextStyle(fontSize:15),)),
+        title: Text(
+          'Theme',
+        ),
+      ),
+    ),
                 Divider(
                   color: AppColor.blackcolor,
                 ),
@@ -172,6 +216,11 @@ class _DrawpageState extends State<Drawpage> {
                     onTap: updateState(7),
                     title: 'Notes',
                     icon: CupertinoIcons.doc_text),
+                    AppBarTile(
+                    index: 2,
+                    onTap: updateState(0),
+                    title: 'Biographie',
+                    icon: Icons.person_outline),
                 AppBarTile(
                   index: 7,
                   onTap: updateState(8),
@@ -202,7 +251,7 @@ class AppBarTile extends StatelessWidget {
   final IconData icon;
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 50,
       child: ListTile(
         onTap: () {
@@ -211,15 +260,15 @@ class AppBarTile extends StatelessWidget {
         leading: Icon(
           icon,
           size: 25,
-          color: AppColor.blackcolor2,
+         // color: AppColor.blackcolor2,
         ),
         trailing: Icon(
           CupertinoIcons.right_chevron,
-          color: Color.fromARGB(79, 0, 0, 0),
+       //   color: Color.fromARGB(79, 0, 0, 0),
         ),
         title: Text(
           title,
-          style: TextStyle(color: AppColor.blackcolor2),
+         // style: TextStyle(color: AppColor.blackcolor2),
         ),
       ),
     );

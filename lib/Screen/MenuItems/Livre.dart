@@ -1,8 +1,7 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:page_animation_transition/animations/right_to_left_transition.dart';
-import 'package:page_animation_transition/page_animation_transition.dart';
 import 'package:pkp_android_app/Screen/predPage.dart';
 import 'package:pkp_android_app/const.dart';
 
@@ -24,12 +23,9 @@ class _LivrePkpState extends State<LivrePkp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.whitecolor,
       appBar: AppBar(
-        backgroundColor: AppColor.appbar,
         title: Text(
           widget.title,
-          style: TextStyle(color: AppColor.text),
         ),
         leading: IconButton(
             onPressed: () {
@@ -37,7 +33,6 @@ class _LivrePkpState extends State<LivrePkp> {
             },
             icon: Icon(
               CupertinoIcons.back,
-              color: AppColor.text,
             )),
       ),
       body: Padding(
@@ -45,7 +40,6 @@ class _LivrePkpState extends State<LivrePkp> {
         child: ListView.separated(
           clipBehavior: Clip.none,
           separatorBuilder: (BuildContext context, int index) => const Divider(
-            color: AppColor.blackcolor,
           ),
           itemCount: 152,
           itemBuilder: ((context, index) {
@@ -56,16 +50,14 @@ class _LivrePkpState extends State<LivrePkp> {
               child: ListTile(
                 title: Text(
                   "Kacou ${index + 1} : Titre de la prédication",
-                  style: TextStyle(color: AppColor.blackcolor2),
                 ),
                 trailing: Icon(
                   CupertinoIcons.right_chevron,
-                  color: AppColor.text,
                 ),
                 subtitle: Text(
                   "Prophète Kacou Philippe",
                   style: TextStyle(
-                      color: AppColor.text, fontStyle: FontStyle.italic),
+                   fontStyle: FontStyle.italic),
                 ),
               ),
             );

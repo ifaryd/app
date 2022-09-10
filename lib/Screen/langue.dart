@@ -23,19 +23,16 @@ class _LangueState extends State<Langue> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: AppColor.greycolor2,
         appBar: AppBar(
           elevation: 0,
-          backgroundColor: AppColor.whitecolor2,
           title: const Text('Langue',
-              style: TextStyle(color: AppColor.blackcolor2)),
+              ),
           centerTitle: true,
           actions: [
             TextButton(
                 onPressed: () {},
                 child: Text(
                   'Actualiser',
-                  style: TextStyle(color: AppColor.blackcolor, fontSize: 15),
                 ))
           ],
           automaticallyImplyLeading: false,
@@ -51,7 +48,7 @@ class _LangueState extends State<Langue> {
             ),
             SizedBox(height: 3),
             Container(
-              color: AppColor.whitecolor,
+            //  color: AppColor.whitecolor,
               height: 215,
               child: Column(
                 children: [
@@ -62,7 +59,7 @@ class _LangueState extends State<Langue> {
                       itemCount: 4,
                       separatorBuilder: (BuildContext context, int index) =>
                           const Divider(
-                        color: AppColor.blackcolor,
+                      //  color: AppColor.blackcolor,
                       ),
                       itemBuilder: (BuildContext context, int index) {
                         return InkWell(
@@ -80,20 +77,27 @@ class _LangueState extends State<Langue> {
                                 context: context,
                                 builder: ((context) {
                                   return AlertDialog(
-                                    backgroundColor:AppColor.whitecolor,
-                                    title:Text("Téléchargement",style:TextStyle(color:AppColor.blackcolor2),),
+                                 //   backgroundColor:AppColor.whitecolor,
+                                    title:Text("Téléchargement"),
                                     content:Column(
                                       mainAxisSize:MainAxisSize.min,
                                       crossAxisAlignment:CrossAxisAlignment.start,
                                       children: const [
-                                        Text('Télécharger la langue de la base de données avant de continuer',style:TextStyle(color:AppColor.blackcolor2),),
+                                        Text('Télécharger la langue de la base de données avant de continuer',),
                                         SizedBox(height:5),
-                                        Text('Voulez-vous télécharger cette langue ?',style:TextStyle(color:AppColor.blackcolor2),),
+                                        Text('Voulez-vous télécharger cette langue ?',),
                                       ],
                                     ),
                                     actions: [
-                                      TextButton(onPressed:(){}, child:Text('Annuler')),
-                                      TextButton(onPressed:(){}, child:Text('Télécharger')),
+                                      TextButton(onPressed:(){
+                                        Navigator.pop(context);
+                                      }, child:Text('Annuler')),
+                                      TextButton(onPressed:(){
+                                         setState(() {
+                                                      langue[index][1] = true;
+                                                       Navigator.pop(context);
+                                                    });
+                                      }, child:Text('Télécharger')),
                                     ],
                                   );
                                 })
@@ -113,7 +117,6 @@ class _LangueState extends State<Langue> {
                                             child: Icon(
                                                 CupertinoIcons.check_mark,
                                                 semanticLabel:'check',
-                                                color: AppColor.blackcolor2,
                                                 size: 18,
                                               ),
                                           )
@@ -124,7 +127,6 @@ class _LangueState extends State<Langue> {
                                         child: Text(
                                           langue[index][0].toString(),
                                           style: TextStyle(
-                                              color: AppColor.blackcolor2,
                                               fontSize: 16),
                                         ),
                                       ),
@@ -138,7 +140,6 @@ class _LangueState extends State<Langue> {
                                                 Text(
                                                   "Nouveau",
                                                   style: TextStyle(
-                                                      color: AppColor.blackcolor,
                                                       fontSize:12,
                                                       ),
                                                 ),
@@ -151,7 +152,6 @@ class _LangueState extends State<Langue> {
                                                   icon: Icon(
                                                     Icons.file_download_outlined,
                                                     size:27,
-                                                    color: AppColor.blackcolor,
                                                   ),
                                                 )
                                               ],
@@ -160,7 +160,6 @@ class _LangueState extends State<Langue> {
                                       SizedBox(width: 10),
                                       Icon(
                                         CupertinoIcons.exclamationmark_circle,
-                                        color: AppColor.blackcolor,
                                       ),
                                       SizedBox(width: 10),
                                     ],

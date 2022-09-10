@@ -1,10 +1,11 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 
 import '../const.dart';
 
 class SermPkp extends StatefulWidget {
-  final langue;
-  const SermPkp({Key? key, this.langue}) : super(key: key);
+  const SermPkp({Key? key,}) : super(key: key);
   @override
   State<SermPkp> createState() => _SermPkpState();
 }
@@ -16,7 +17,7 @@ class _SermPkpState extends State<SermPkp> {
       color: AppColor.whitecolor,
       child: Center(
           child: Text(
-        "Lire un sermons en ${widget.langue}",
+        "Lire un sermons",
         style: const TextStyle(fontSize: 22),
       )),
     );

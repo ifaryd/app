@@ -1,12 +1,6 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:page_animation_transition/animations/right_to_left_transition.dart';
-import 'package:page_animation_transition/page_animation_transition.dart';
-import 'package:pkp_android_app/Screen/langue.dart';
-
-import 'Homepage.dart';
-
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
@@ -17,17 +11,17 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
+    // ignore: todo
     // TODO: implement initState
     super.initState();
     Future.delayed(const Duration(seconds: 5)).then((value) {
       Navigator.of(context).pushReplacementNamed('choselanguage');
-      /* Navigator.of(context).pushReplacement(PageAnimationTransition(
-          page: const Langue(), pageAnimationType: RightToLeftTransition())); */
     });
   }
 
   @override
   Widget build(BuildContext context) {
+//  final  width=MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SizedBox(

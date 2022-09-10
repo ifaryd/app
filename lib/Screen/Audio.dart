@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: file_names
 
+import 'package:flutter/material.dart';
 import '../const.dart';
 
 class AudioPkp extends StatefulWidget {
-  final langue;
-  const AudioPkp({Key? key, this.langue}) : super(key: key);
+  const AudioPkp({Key? key}) : super(key: key);
   @override
   State<AudioPkp> createState() => _AudioPkpState();
 }
@@ -16,7 +16,7 @@ class _AudioPkpState extends State<AudioPkp> {
       color: AppColor.whitecolor,
       child: Center(
           child: Text(
-        "Audio en ${widget.langue}",
+        "Audio",
         style: const TextStyle(fontSize: 22),
       )),
     );

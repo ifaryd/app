@@ -1,8 +1,6 @@
 import 'package:flutter/widgets.dart';
 
 class AppColor{
-    static const Color bluecolor = Color.fromRGBO(63,81,181,1);
-    static const Color bodycolor = Color.fromRGBO(220,187,134,1);
     static const Color blackcolor = Color.fromARGB(138,0,0,0);
     static const Color blackcolor2 = Color.fromRGBO(40,40,40,1);
     static const Color greycolor = Color.fromRGBO(68,68,68,1);
