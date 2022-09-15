@@ -28,17 +28,23 @@ class _LivrePkpState extends State<LivrePkp> {
           widget.title,
         ),
         leading: IconButton(
+          splashRadius:1,
             onPressed: () {
               Navigator.pop(context);
             },
             icon: Icon(
               CupertinoIcons.back,
             )),
+            actions: [
+              IconButton(onPressed:(){
+
+              }, icon: Icon(CupertinoIcons.arrow_up_arrow_down_circle))
+            ],
       ),
       body: Padding(
         padding: const EdgeInsets.only(left:10.0),
         child: ListView.separated(
-          clipBehavior: Clip.none,
+         // clipBehavior: Clip.none,
           separatorBuilder: (BuildContext context, int index) => const Divider(
           ),
           itemCount: 152,

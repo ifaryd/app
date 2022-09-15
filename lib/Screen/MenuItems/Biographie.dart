@@ -16,12 +16,9 @@ class BiographieState extends State<Biographie> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:AppColor.whitecolor,
         appBar: AppBar(
-        backgroundColor: AppColor.appbar,
         title: Text(
           widget.title,
-          style: TextStyle(color: AppColor.text),
         ),
         leading: IconButton(
             onPressed: () {
@@ -29,10 +26,9 @@ class BiographieState extends State<Biographie> {
             },
             icon: Icon(
               CupertinoIcons.back,
-              color: AppColor.text,
             )),
       ),
-      body:Center(child:Text("Indisponible pour le moment",style:TextStyle(color:AppColor.blackcolor,fontSize:20),),),
+      body:Center(child:Text("Indisponible pour le moment",style:TextStyle(fontSize:20),),),
     );
   }
 }

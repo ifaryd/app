@@ -1,43 +1,30 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_animation_transition/animations/right_to_left_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
-import 'package:pkp_android_app/const.dart';
-import 'drawpage.dart';
 
-class Langue extends StatefulWidget {
-  const Langue({Key? key}) : super(key: key);
+import '../../../const.dart';
+import '../../drawpage.dart';
+
+class Langues extends StatefulWidget {
+  const Langues({super.key});
 
   @override
-  State<Langue> createState() => _LangueState();
+  State<Langues> createState() => _LanguesState();
 }
 
-class _LangueState extends State<Langue> {
-  bool download = false;
-  final langue = [
+class _LanguesState extends State<Langues> {
+   final langue = [
     ['English', false],
-    ['Francais', false],
-    ['Espagnol', false],
-    ['Portugais', false],
+    ['Français', false],
+    ['Español', false],
+    ['português', false],
   ];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          title: const Text('Langue',
-              ),
-          centerTitle: true,
-          actions: [
-            TextButton(
-                onPressed: () {},
-                child: Text(
-                  'Actualiser',
-                ))
-          ],
-          automaticallyImplyLeading: false,
-        ),
-        body: Column(
+    return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 20),
@@ -183,7 +170,6 @@ class _LangueState extends State<Langue> {
                   ),
                 )),
           ],
-        )
         );
   }
 }

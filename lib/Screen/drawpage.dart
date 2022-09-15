@@ -155,9 +155,9 @@ class _DrawpageState extends State<Drawpage> {
         onTap: () {
         
         },
-        leading:Text(''),
+        leading:Icon(CupertinoIcons.circle_lefthalf_fill),
         trailing:(themeLight)?TextButton.icon(onPressed:(){
-          setState(() {
+          setState(() { 
             themeLight=!themeLight;
                         (themeLight)? AdaptiveTheme.of(context).setLight():   AdaptiveTheme.of(context).setDark();
 
@@ -174,7 +174,6 @@ class _DrawpageState extends State<Drawpage> {
       ),
     ),
                 Divider(
-                  color: AppColor.blackcolor,
                 ),
                 AppBarTile(
                   index: 0,

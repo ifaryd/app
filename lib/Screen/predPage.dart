@@ -23,6 +23,7 @@ class PredPagesState extends State<PredPages> {
         ),
        // centerTitle: true,
         leadingWidth: 90,
+        
         leading: TextButton.icon(
             onPressed: () {
               Navigator.pop(context);
@@ -42,10 +43,9 @@ class PredPagesState extends State<PredPages> {
              constraints:BoxConstraints.tightForFinite(width:65),
              position:PopupMenuPosition.under,
              itemBuilder:((context) => [
-               PopupMenuItem(value:0, child:IconButton(onPressed:(){}, icon:Icon(Icons.settings_outlined))),
-               PopupMenuItem(value:1,child:IconButton(onPressed:(){}, icon:Icon(CupertinoIcons.exclamationmark_circle))),
+               PopupMenuItem(value:0, child:IconButton(onPressed:(){}, icon:Icon(Icons.copy_all))),
                PopupMenuItem(value:2,child:IconButton(onPressed:(){}, icon:Icon(Icons.search_outlined))),
-               PopupMenuItem(value:3,child:IconButton(onPressed:(){}, icon:Icon(Icons.bookmark_add_outlined))),
+               PopupMenuItem(value:3,child:IconButton(onPressed:(){}, icon:Icon(Icons.download))),
                PopupMenuItem(value:4,child:IconButton(onPressed:(){}, icon:Icon(CupertinoIcons.volume_up))),
              ]),
            ),
