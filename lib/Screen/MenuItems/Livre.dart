@@ -3,7 +3,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pkp_android_app/Screen/predPage.dart';
-import 'package:pkp_android_app/const.dart';
 
 class LivrePkp extends StatefulWidget {
   final String title;
@@ -42,20 +41,21 @@ class _LivrePkpState extends State<LivrePkp> {
             ],
       ),
       body: Padding(
-        padding: const EdgeInsets.only(left:10.0),
+        padding: const EdgeInsets.only(left:1.0),
         child: ListView.separated(
-         // clipBehavior: Clip.none,
           separatorBuilder: (BuildContext context, int index) => const Divider(
           ),
-          itemCount: 152,
+          itemCount: 10,
+          shrinkWrap: true,
           itemBuilder: ((context, index) {
             return InkWell(
               onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: ((context) => PredPages())));
               },
               child: ListTile(
+                style:ListTileStyle.list,
                 title: Text(
-                  "Kacou ${index + 1} : Titre de la prédication",
+                  "Kacou ${index + 1} : Titre de prédication",style:TextStyle(fontSize:15.2),
                 ),
                 trailing: Icon(
                   CupertinoIcons.right_chevron,
