@@ -40,8 +40,8 @@ class MyApp extends StatelessWidget {
       theme:theme,
       darkTheme:darkTheme,
       routes:{
-        '/':((context) => const SplashScreen()),
-        'choselanguage':((context) => const ChoixLangue()),
+        //'/':((context) => const SplashScreen()),
+        '/':((context) => const ChoixLangue()),
       },
     )
     );

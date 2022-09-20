@@ -35,7 +35,7 @@ class _LanguesState extends State<Langues> {
             ),
             SizedBox(height: 3),
             Container(
-            //  color: AppColor.whitecolor,
+            //  color: AppColor.whitecolo
               height: 215,
               child: Column(
                 children: [

@@ -40,6 +40,7 @@ dependencies:
   path: ^1.8.2
   path_provider: ^2.0.11
   adaptive_theme: ^3.1.1
+  flutter_native_splash: ^2.2.9
   
 
 dev_dependencies:
@@ -52,6 +53,16 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+
+flutter_native_splash:
+
+  color: 'ffffff'
+  fullscreen: true
+  image: lib/Images/pkp.png
+
+  android: true
+  ios: true
+  desktop: true 
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
