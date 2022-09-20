@@ -22,7 +22,7 @@ class _ChoixLangueState extends State<ChoixLangue> {
       child: Scaffold(
           appBar: AppBar(
             elevation: 0,
-            title: const Text('ChoixLangue',
+            title: const Text('Langues',
                 ),
             centerTitle: true,
             actions: [
