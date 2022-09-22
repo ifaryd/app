@@ -25,13 +25,7 @@ class _ChoixLangueState extends State<ChoixLangue> {
             title: const Text('Langues',
                 ),
             centerTitle: true,
-            actions: [
-              TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    'Actualiser',
-                  ))
-            ],
+       
             automaticallyImplyLeading: false,
             bottom:TabBar(
               indicatorColor:Color.fromARGB(154, 33, 149, 243),

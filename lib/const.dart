@@ -10,4 +10,5 @@ class AppColor{
     static const Color langcolor = Color.fromARGB(255, 124, 123, 123);
     static const Color text = Color.fromARGB(255, 134, 133, 135);
     static const Color appbar = Color.fromARGB(234, 248, 248, 251);
+    static const Color blue = Color.fromARGB(154, 33, 149, 243);
 }

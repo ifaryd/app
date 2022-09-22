@@ -1,8 +1,13 @@
 // ignore_for_file: file_names
 
+import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:pkp_android_app/Dbmanage/dbmanage.dart';
 import 'package:pkp_android_app/Screen/predPage.dart';
+import 'package:pkp_android_app/model/predications.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class LivrePkp extends StatefulWidget {
   final String title;
@@ -16,6 +21,33 @@ class _LivrePkpState extends State<LivrePkp> {
   tap(int idx) {
     setState(() {
       predindex = idx;
+    });
+  }
+  List<classPredications>? predList;
+  Iterable<classPredications>? revList;
+  bool load=true;
+  getallPred()async{
+    predList= await Dbmanage().getPred();
+    revList=predList!.reversed;
+    print('list num :${predList!.length}');
+   setState(() {
+      load=false;
+   });
+  }
+  final ItemScrollController itemScrollController = ItemScrollController();
+  final itemkey=GlobalKey();
+  Future scrollDown(int index)async{
+   itemScrollController.jumpTo(
+     index:index,
+     );
+  }
+  final Duration initialDelay = Duration(milliseconds:50);
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+       setState(() {
+      getallPred();
     });
   }
   @override
@@ -34,35 +66,48 @@ class _LivrePkpState extends State<LivrePkp> {
               CupertinoIcons.back,
             )),
             actions: [
+               IconButton(onPressed:(){
+                setState(() {
+                  scrollDown(0);
+                });
+              }, icon: Icon(Icons.keyboard_double_arrow_up_outlined)),
               IconButton(onPressed:(){
-
-              }, icon: Icon(CupertinoIcons.arrow_up_arrow_down_circle))
+                setState(() {
+                  scrollDown(predList!.length-304);
+                });
+              }, icon: Icon(Icons.keyboard_double_arrow_down_sharp))
             ],
       ),
-      body: Padding(
+      body:(load)? Center(child:CircularProgressIndicator.adaptive(),): Padding(
         padding: const EdgeInsets.only(left:1.0),
-        child: ListView.separated(
+        child: ScrollablePositionedList.separated(
+          itemScrollController: itemScrollController,
           separatorBuilder: (BuildContext context, int index) => const Divider(
           ),
-          itemCount: 10,
+          itemCount: (revList!.length)-304,
           shrinkWrap: true,
           itemBuilder: ((context, index) {
             return InkWell(
               onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: ((context) => PredPages())));
               },
-              child: ListTile(
-                style:ListTileStyle.list,
-                title: Text(
-                  "Kacou ${index + 1} : Titre de prédication",style:TextStyle(fontSize:15.2),
-                ),
-                trailing: Icon(
-                  CupertinoIcons.right_chevron,
-                ),
-                subtitle: Text(
-                  "Prophète Kacou Philippe",
-                  style: TextStyle(
-                   fontStyle: FontStyle.italic),
+              child: DelayedDisplay(
+                delay:initialDelay ,
+                child: ListTile(
+                  style:ListTileStyle.list,
+                  title:Text(
+                    "Kacou ${predList![index].id} : ${predList![index].titre}",style:TextStyle(fontSize:16,fontWeight:FontWeight.bold),
+                   
+                  ),
+                  trailing: Icon(
+                    CupertinoIcons.right_chevron,
+                    size:20,
+                  ),
+                  subtitle: Text(
+                    predList![index].sous_titre.toString(),
+                    style: TextStyle(
+                     fontStyle: FontStyle.italic),
+                  ),
                 ),
               ),
             );

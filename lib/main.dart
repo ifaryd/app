@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pkp_android_app/Screen/SplashScreen.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:pkp_android_app/const.dart';
 
