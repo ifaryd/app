@@ -154,28 +154,25 @@ class _DrawpageState extends State<Drawpage> {
               children: [
                SizedBox(
       height: 50,
-      child: DelayedDisplay(
-        delay:Duration(seconds:1),
-        child: ListTile(
-          onTap: () {
-          
-          },
-          leading:Icon(CupertinoIcons.circle_lefthalf_fill),
-          trailing:(themeLight)?TextButton.icon(onPressed:(){
-            setState(() { 
-              themeLight=!themeLight;
-                          (themeLight)? AdaptiveTheme.of(context).setLight():   AdaptiveTheme.of(context).setDark();
+      child: ListTile(
+        onTap: () {
+        
+        },
+        leading:Icon(CupertinoIcons.circle_lefthalf_fill),
+        trailing:(themeLight)?TextButton.icon(onPressed:(){
+          setState(() { 
+            themeLight=!themeLight;
+                        (themeLight)? AdaptiveTheme.of(context).setLight():   AdaptiveTheme.of(context).setDark();
       
-            });
-          }, icon:Icon(CupertinoIcons.sun_max_fill,size:27,), label:Text('Light',style:TextStyle(fontSize:15),)):TextButton.icon(onPressed:(){
-             setState(() {
-              themeLight=!themeLight;
-              (themeLight)? AdaptiveTheme.of(context).setLight():   AdaptiveTheme.of(context).setDark();
-            });
-          }, icon:Icon(CupertinoIcons.moon_fill,size:27), label:Text('Dark',style:TextStyle(fontSize:15),)),
-          title: Text(
-            'Theme',
-          ),
+          });
+        }, icon:Icon(CupertinoIcons.sun_max_fill,size:27,), label:Text('Light',style:TextStyle(fontSize:15),)):TextButton.icon(onPressed:(){
+           setState(() {
+            themeLight=!themeLight;
+            (themeLight)? AdaptiveTheme.of(context).setLight():   AdaptiveTheme.of(context).setDark();
+          });
+        }, icon:Icon(CupertinoIcons.moon_fill,size:27), label:Text('Dark',style:TextStyle(fontSize:15),)),
+        title: Text(
+          'Theme',
         ),
       ),
     ),
@@ -258,25 +255,22 @@ class AppBarTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 50,
-      child: DelayedDisplay(
-        delay:Duration(milliseconds:250),
-        child: ListTile(
-          onTap: () {
-            onTap();
-          },
-          leading: Icon(
-            icon,
-            size: 25,
-           // color: AppColor.blackcolor2,
-          ),
-          trailing: Icon(
-            CupertinoIcons.right_chevron,
-         //   color: Color.fromARGB(79, 0, 0, 0),
-          ),
-          title: Text(
-            title,
-           // style: TextStyle(color: AppColor.blackcolor2),
-          ),
+      child: ListTile(
+        onTap: () {
+          onTap();
+        },
+        leading: Icon(
+          icon,
+          size: 25,
+         // color: AppColor.blackcolor2,
+        ),
+        trailing: Icon(
+          CupertinoIcons.right_chevron,
+       //   color: Color.fromARGB(79, 0, 0, 0),
+        ),
+        title: Text(
+          title,
+         // style: TextStyle(color: AppColor.blackcolor2),
         ),
       ),
     );

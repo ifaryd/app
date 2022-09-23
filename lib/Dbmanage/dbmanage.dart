@@ -3,6 +3,7 @@ import 'package:http/http.dart'as http;
 import 'package:pkp_android_app/model/langues.dart';
 import 'package:pkp_android_app/model/predications.dart';
 
+import '../HostLink/HostLink.dart';
 class Dbmanage{
 
   List<ClassLangues> langFromJson(String jsonString){ //Fonction qui recupere la sorti Json pour les faits sortir un par un
@@ -15,7 +16,7 @@ class Dbmanage{
   }
 
   Future<List<ClassLangues>> getLangue() async{
-    final response=await http.post(Uri.parse('http://192.168.1.3/pkp_db/selectLang.php'));
+    final response=await http.post(Uri.parse('${Hostconfig.url}/selectLang.php'));
     if(response.statusCode==200){
       final List<ClassLangues> list=langFromJson(response.body);
       return list;
@@ -27,7 +28,7 @@ class Dbmanage{
   }
 
   Future<List<classPredications>> getPred() async{
-    final response=await http.post(Uri.parse('http://192.168.1.3/pkp_db/predi.php'));
+    final response=await http.post(Uri.parse('${Hostconfig.url}/predi.php'));
     if(response.statusCode==200){
       final List<classPredications> list=predFromJson(response.body);
       return list;

@@ -46,9 +46,11 @@ class _LivrePkpState extends State<LivrePkp> {
   void initState() {
     // TODO: implement initState
     super.initState();
-       setState(() {
-      getallPred();
-    });
+      Future.delayed(
+        Duration(microseconds:500),(){
+         getallPred();
+        }
+      );
   }
   @override
   Widget build(BuildContext context) {
@@ -106,7 +108,7 @@ class _LivrePkpState extends State<LivrePkp> {
                   subtitle: Text(
                     predList![index].sous_titre.toString(),
                     style: TextStyle(
-                     fontStyle: FontStyle.italic),
+                     fontStyle: FontStyle.italic,fontSize:13),
                   ),
                 ),
               ),

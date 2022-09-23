@@ -22,7 +22,7 @@ class PredPagesState extends State<PredPages> {
           style: TextStyle(fontSize:17),
         ),
        // centerTitle: true,
-        leadingWidth: 90,
+        leadingWidth: 95,
         
         leading: TextButton.icon(
             onPressed: () {
