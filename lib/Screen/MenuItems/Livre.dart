@@ -24,11 +24,9 @@ class _LivrePkpState extends State<LivrePkp> {
     });
   }
   List<classPredications>? predList;
-  Iterable<classPredications>? revList;
   bool load=true;
   getallPred()async{
     predList= await Dbmanage().getPred();
-    revList=predList!.reversed;
     print('list num :${predList!.length}');
    setState(() {
       load=false;
@@ -46,11 +44,8 @@ class _LivrePkpState extends State<LivrePkp> {
   void initState() {
     // TODO: implement initState
     super.initState();
-      Future.delayed(
-        Duration(microseconds:500),(){
+      
          getallPred();
-        }
-      );
   }
   @override
   Widget build(BuildContext context) {
@@ -75,7 +70,7 @@ class _LivrePkpState extends State<LivrePkp> {
               }, icon: Icon(Icons.keyboard_double_arrow_up_outlined)),
               IconButton(onPressed:(){
                 setState(() {
-                  scrollDown(predList!.length-304);
+                  scrollDown(predList!.length);
                 });
               }, icon: Icon(Icons.keyboard_double_arrow_down_sharp))
             ],
@@ -86,19 +81,19 @@ class _LivrePkpState extends State<LivrePkp> {
           itemScrollController: itemScrollController,
           separatorBuilder: (BuildContext context, int index) => const Divider(
           ),
-          itemCount: (revList!.length)-304,
+          itemCount: (predList!.length),
           shrinkWrap: true,
           itemBuilder: ((context, index) {
             return InkWell(
               onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: ((context) => PredPages())));
+              Navigator.push(context, MaterialPageRoute(builder: ((context) => PredPages(title:'Kacou ${predList![index].id} : ${predList![index].titre}',))));
               },
               child: DelayedDisplay(
                 delay:initialDelay ,
                 child: ListTile(
                   style:ListTileStyle.list,
                   title:Text(
-                    "Kacou ${predList![index].id} : ${predList![index].titre}",style:TextStyle(fontSize:16,fontWeight:FontWeight.bold),
+                    "Kacou ${predList![index].id} : ${predList![index].titre}",style:TextStyle(fontSize:16,fontWeight:FontWeight.bold),textAlign:TextAlign.center,
                    
                   ),
                   trailing: Icon(

@@ -1,4 +1,4 @@
-class Assemblees {
+class ClassAssemblees {
   int id;
   String nom;
   int ville_id;
@@ -6,7 +6,7 @@ class Assemblees {
   String addresse;
   String photo;
 
-  Assemblees(this.id, this.nom, this.ville_id, this.localisation, this.addresse,
+  ClassAssemblees(this.id, this.nom, this.ville_id, this.localisation, this.addresse,
       this.photo);
 
   Map<String, dynamic> toMap() {
@@ -20,7 +20,7 @@ class Assemblees {
     };
   }
 
-  factory Assemblees.fromMap(Map<String, dynamic> map) => Assemblees(
+  factory ClassAssemblees.fromMap(Map<String, dynamic> map) => ClassAssemblees(
       map['id'],
       map['nom'],
       map['ville_id'],

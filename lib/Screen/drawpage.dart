@@ -4,8 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_animation_transition/animations/right_to_left_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
+import 'package:pkp_android_app/Screen/MenuItems/Contact.dart';
 import 'package:pkp_android_app/Screen/MenuItems/Interviews.dart';
+import 'package:pkp_android_app/Screen/MenuItems/Notes.dart';
 import 'package:pkp_android_app/Screen/MenuItems/Serviteurs.dart';
+import 'package:pkp_android_app/Screen/MenuItems/Temoignages.dart';
 import 'package:pkp_android_app/Screen/MenuItems/photos.dart';
 import 'package:pkp_android_app/const.dart';
 
@@ -63,19 +66,19 @@ class _DrawpageState extends State<Drawpage> {
             pageAnimationType: RightToLeftTransition()));
       }else if (index == 6) {
         Navigator.of(context).push(PageAnimationTransition(
-            page: Cantiques(
+            page: Temoignages(
               title: 'Témoignages',
             ),
             pageAnimationType: RightToLeftTransition()));
       }else if (index == 7) {
         Navigator.of(context).push(PageAnimationTransition(
-            page: Cantiques(
+            page: Notes(
               title: 'Mes Notes',
             ),
             pageAnimationType: RightToLeftTransition()));
       }else if (index == 8) {
         Navigator.of(context).push(PageAnimationTransition(
-            page: Cantiques(
+            page: Contacts(
               title: 'Contacts',
             ),
             pageAnimationType: RightToLeftTransition()));

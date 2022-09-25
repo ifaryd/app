@@ -29,7 +29,21 @@ class IntervewsVState extends State<IntervewsV> {
               CupertinoIcons.back,
             )),
       ),
-      body:Center(child:Text("Indisponible pour le moment",style:TextStyle(fontSize:20),),),
+      body:ListView.builder(
+        itemCount: 21,
+        itemBuilder:((context, index) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              height:110,
+             decoration:BoxDecoration(
+               color:Colors.white70,
+               borderRadius:BorderRadius.circular(10),
+             ),
+            ),
+          );
+        }),
+      ),
     );
   }
 }

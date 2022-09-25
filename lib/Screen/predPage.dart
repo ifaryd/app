@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:pkp_android_app/const.dart';
 
 class PredPages extends StatefulWidget {
-  const PredPages({Key? key}) : super(key: key);
-
+  const PredPages({Key? key, required this.title}) : super(key: key);
+  final String title;
   @override
   State<PredPages> createState() => PredPagesState();
 }
@@ -14,7 +14,7 @@ class PredPages extends StatefulWidget {
 class PredPagesState extends State<PredPages> {
   @override
   Widget build(BuildContext context) {
-   
+   double widht=MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -53,7 +53,19 @@ class PredPagesState extends State<PredPages> {
          
         ],
       ),
-      body: Text(''),
+      body:Column(
+        children: [
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                width:widht*0.66,
+                child:Text(widget.title,textAlign:TextAlign.center,style:TextStyle(fontSize:32,fontWeight:FontWeight.bold),),
+              ),
+            ),
+          )
+        ],
+      )
     );
   }
 }
