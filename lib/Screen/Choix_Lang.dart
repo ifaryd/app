@@ -1,8 +1,7 @@
 // ignore_for_file: file_names
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pkp_android_app/Screen/MenuItems/Language/Langues.dart';
+import 'MenuItems/Language/Langues.dart';
 import 'MenuItems/Language/ethnie.dart';
 
 class ChoixLangue extends StatefulWidget {

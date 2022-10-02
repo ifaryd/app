@@ -1,11 +1,13 @@
 // ignore_for_file: file_names
 
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_animation_transition/animations/right_to_left_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
 import 'package:pkp_android_app/Screen/drawpage.dart';
-
+import 'package:http/http.dart' as http;
 import '../../../Dbmanage/dbmanage.dart';
 import '../../../const.dart';
 import '../../../model/langues.dart';
@@ -18,23 +20,28 @@ class Langues extends StatefulWidget {
 }
 
 class _LanguesState extends State<Langues> {
-  List<ClassLangues> prestList = [];
-  bool loading = true;
-  getAlllangues() async {
-    prestList = await Dbmanage().getLangue();
-    setState(() {
-      print('lenght=${prestList.length}');
-      loading = false;
-    });
-  }
+List<LangueModel> langList=[];
+ Future<List<LangueModel>> getLangues()async{
+    final response =  await http.get(Uri.parse('http://192.168.1.13:8000/api/langues'));
+     if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+        var datax = data['data'];
+        print(datax);
+        for (var u in datax) {
+          LangueModel langues=LangueModel(id: u['id'], libelle: u['libelle'], initial: u['initial'], createdAt: u['createdAt'], updatedAt: u['updatedAt'], deletedAt: u['deletedAt']);
+        langList.add(langues);
+        }
+      return langList; 
+      }else{
+        return langList;
+      }
+ }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    setState(() {
-      getAlllangues();
-    });
+    
   }
 
   @override
@@ -54,8 +61,6 @@ class _LanguesState extends State<Langues> {
               GestureDetector(
                   onTap:(){
                     setState(() {
-                      loading=true;
-                      getAlllangues();
                     });
                   },
                 child: Text("Cliquer pour rechercher une mis à jour",style:TextStyle(color:Colors.blue),)),
@@ -65,20 +70,15 @@ class _LanguesState extends State<Langues> {
         SizedBox(height: 3),
         Column(
           children: [
-            (loading)
-                ? Center(
-                    child: CircularProgressIndicator(
-                      color: AppColor.blue,
-                    ),
-                  )
-                : (prestList == null)
-                    ? Center(
-                        child: Text('Null'),
-                      )
-                    : ListView.separated(
+        
+                FutureBuilder(
+                  future: getLangues(),
+                  builder:((context, snapshot){
+                    if(snapshot.hasData){
+                      return ListView.separated(
                       shrinkWrap:true,
                         padding: EdgeInsets.zero,
-                        itemCount: prestList.length,
+                        itemCount:langList.length,
                         separatorBuilder:
                             (BuildContext context, int index) =>
                                 const Divider(),
@@ -96,7 +96,7 @@ class _LanguesState extends State<Langues> {
                               child: Row(
                                 mainAxisAlignment:MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(prestList[index].libelle.toString(),style: TextStyle(fontSize:17),),
+                                  Text(langList[index].libelle.toString(),style: TextStyle(fontSize:17),),
                                   Row(
                                     children: [
                                       Text("Nouveau",style:TextStyle(color:AppColor.blue,),),
@@ -109,7 +109,13 @@ class _LanguesState extends State<Langues> {
                             ),
                           );
                         },
-                      ),
+                      );
+                    }else
+                    {
+                      return Center(child:Text("Aucune langue dans la db"),);
+                    }
+                  }),
+                )
           ],
         ),
         Expanded(

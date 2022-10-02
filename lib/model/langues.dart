@@ -1,35 +1,37 @@
-class ClassLangues {
-  String? id;
+class LangueModel {
+   int? id;
   String? libelle;
   String? initial;
-  DateTime? createdAt;
-  DateTime? updatedAt;
-  dynamic deletedAt;
+  String? createdAt;
+  String? updatedAt;
+  String?   deletedAt;
 
-  ClassLangues({
-    this.id,
-    this.libelle,
-    this.initial,
-    this.createdAt,
-    this.updatedAt,
-    this.deletedAt,
-  });
+  LangueModel(
+      {
+      required this.id,
+      required this.libelle,
+      required this.initial,
+      required this.createdAt,
+      required this.updatedAt,
+      required this.deletedAt});
 
-  factory ClassLangues.fromJson(Map<String, dynamic> json) => ClassLangues(
-        id: json["id"],
-        libelle: json["libelle"],
-        initial: json["initial"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
-        deletedAt: json["deleted_at"],
-      );
+  LangueModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    libelle = json['libelle'];
+    initial = json['initial'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    deletedAt = json['deleted_at'];
+  }
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "libelle": libelle,
-        "initial": initial,
-        "created_at": createdAt!.toIso8601String(),
-        "updated_at": updatedAt!.toIso8601String(),
-        "deleted_at": deletedAt,
-      };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data =  Map<String, dynamic>();
+    data['id'] = this.id;
+    data['libelle'] = this.libelle;
+    data['initial'] = this.initial;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    data['deleted_at'] = this.deletedAt;
+    return data;
+  }
 }

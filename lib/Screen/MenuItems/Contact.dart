@@ -18,18 +18,12 @@ class Contacts extends StatefulWidget {
 class ContactsState extends State<Contacts> {
   List<Classpays>? paysList;
 bool load=true;
-getAllpays()async{
-  paysList=await Dbmanage().getPays();
-  setState(() {
-    load=false;
-  });
-}
+
 @override
 void initState() {
   print("object");
   super.initState();
  
-    getAllpays();
     print('getPays');
 
 }
