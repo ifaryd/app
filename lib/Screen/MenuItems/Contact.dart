@@ -16,7 +16,7 @@ class Contacts extends StatefulWidget {
 
 
 class ContactsState extends State<Contacts> {
-  List<Classpays>? paysList;
+  List<Paysmodel>? paysList;
 bool load=true;
 
 @override

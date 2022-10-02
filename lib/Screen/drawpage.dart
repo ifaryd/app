@@ -32,10 +32,9 @@ class _DrawpageState extends State<Drawpage> {
               title: 'Biographie',
             ),
             pageAnimationType: RightToLeftTransition()));
-      }
-      else if (index == 1) {
+      } else if (index == 1) {
         Navigator.of(context).push(PageAnimationTransition(
-            page: LivrePkp(
+            page: Biographie(
               title: 'Livre',
             ),
             pageAnimationType: RightToLeftTransition()));
@@ -45,38 +44,37 @@ class _DrawpageState extends State<Drawpage> {
               title: 'Interviews Vidéos',
             ),
             pageAnimationType: RightToLeftTransition()));
-      }else if (index == 3) {
+      } else if (index == 3) {
         Navigator.of(context).push(PageAnimationTransition(
             page: photos(
               title: 'Photos',
             ),
             pageAnimationType: RightToLeftTransition()));
-      }else if (index == 4) {
+      } else if (index == 4) {
         Navigator.of(context).push(PageAnimationTransition(
             page: Cantiques(
               title: 'Cantiques & Louanges',
             ),
             pageAnimationType: RightToLeftTransition()));
-      }
-      else if (index == 5) {
+      } else if (index == 5) {
         Navigator.of(context).push(PageAnimationTransition(
             page: ServFidl(
               title: 'Serviteurs Fidèles',
             ),
             pageAnimationType: RightToLeftTransition()));
-      }else if (index == 6) {
+      } else if (index == 6) {
         Navigator.of(context).push(PageAnimationTransition(
             page: Temoignages(
               title: 'Témoignages',
             ),
             pageAnimationType: RightToLeftTransition()));
-      }else if (index == 7) {
+      } else if (index == 7) {
         Navigator.of(context).push(PageAnimationTransition(
             page: Notes(
               title: 'Mes Notes',
             ),
             pageAnimationType: RightToLeftTransition()));
-      }else if (index == 8) {
+      } else if (index == 8) {
         Navigator.of(context).push(PageAnimationTransition(
             page: Contacts(
               title: 'Contacts',
@@ -85,7 +83,8 @@ class _DrawpageState extends State<Drawpage> {
       }
     };
   }
-  bool themeLight=true;
+
+  bool themeLight = true;
   dynamic savedThememode;
 
   @override
@@ -94,23 +93,23 @@ class _DrawpageState extends State<Drawpage> {
     super.initState();
     getCurrentTheme();
   }
-  Future getCurrentTheme() async{
-    savedThememode =await AdaptiveTheme.getThemeMode();
-    if(savedThememode.toString()=='AdaptiveThemeMode.dark'){
+
+  Future getCurrentTheme() async {
+    savedThememode = await AdaptiveTheme.getThemeMode();
+    if (savedThememode.toString() == 'AdaptiveThemeMode.dark') {
       setState(() {
-        themeLight=false;
+        themeLight = false;
         print("Darkmode");
       });
-    }
-    else
-    {
+    } else {
       setState(() {
-        themeLight=true;
+        themeLight = true;
         print("LightMode");
       });
     }
   }
-    final Duration initialDelay = Duration(milliseconds:200);
+
+  final Duration initialDelay = Duration(milliseconds: 200);
 
   @override
   Widget build(BuildContext context) {
@@ -126,21 +125,19 @@ class _DrawpageState extends State<Drawpage> {
                 onPressed: () {},
                 child: Text(
                   'Paramètres',
-                  style: TextStyle( fontSize: 16),
+                  style: TextStyle(fontSize: 16),
                 )),
             TextButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Text('Langues',
-                    style:
-                        TextStyle( fontSize: 16))),
+                child: Text('Langues', style: TextStyle(fontSize: 16))),
           ],
         ),
       ),
       appBar: AppBar(
         automaticallyImplyLeading: false,
-      //  backgroundColor: Color.fromARGB(234, 248, 248, 251),
+        //  backgroundColor: Color.fromARGB(234, 248, 248, 251),
         title: Text(
           "Livre du prophète Kacou Philippe",
           style: TextStyle(fontSize: 17),
@@ -155,32 +152,49 @@ class _DrawpageState extends State<Drawpage> {
             child: ListView(
               padding: EdgeInsets.zero,
               children: [
-               SizedBox(
-      height: 50,
-      child: ListTile(
-        onTap: () {
-        
-        },
-        leading:Icon(CupertinoIcons.circle_lefthalf_fill),
-        trailing:(themeLight)?TextButton.icon(onPressed:(){
-          setState(() { 
-            themeLight=!themeLight;
-                        (themeLight)? AdaptiveTheme.of(context).setLight():   AdaptiveTheme.of(context).setDark();
-      
-          });
-        }, icon:Icon(CupertinoIcons.sun_max_fill,size:27,), label:Text('Light',style:TextStyle(fontSize:15),)):TextButton.icon(onPressed:(){
-           setState(() {
-            themeLight=!themeLight;
-            (themeLight)? AdaptiveTheme.of(context).setLight():   AdaptiveTheme.of(context).setDark();
-          });
-        }, icon:Icon(CupertinoIcons.moon_fill,size:27), label:Text('Dark',style:TextStyle(fontSize:15),)),
-        title: Text(
-          'Theme',
-        ),
-      ),
-    ),
-                Divider(
+                SizedBox(
+                  height: 50,
+                  child: ListTile(
+                    onTap: () {},
+                    leading: Icon(CupertinoIcons.circle_lefthalf_fill),
+                    trailing: (themeLight)
+                        ? TextButton.icon(
+                            onPressed: () {
+                              setState(() {
+                                themeLight = !themeLight;
+                                (themeLight)
+                                    ? AdaptiveTheme.of(context).setLight()
+                                    : AdaptiveTheme.of(context).setDark();
+                              });
+                            },
+                            icon: Icon(
+                              CupertinoIcons.sun_max_fill,
+                              size: 27,
+                            ),
+                            label: Text(
+                              'Light',
+                              style: TextStyle(fontSize: 15),
+                            ))
+                        : TextButton.icon(
+                            onPressed: () {
+                              setState(() {
+                                themeLight = !themeLight;
+                                (themeLight)
+                                    ? AdaptiveTheme.of(context).setLight()
+                                    : AdaptiveTheme.of(context).setDark();
+                              });
+                            },
+                            icon: Icon(CupertinoIcons.moon_fill, size: 27),
+                            label: Text(
+                              'Dark',
+                              style: TextStyle(fontSize: 15),
+                            )),
+                    title: Text(
+                      'Theme',
+                    ),
+                  ),
                 ),
+                Divider(),
                 AppBarTile(
                   index: 0,
                   onTap: updateState(1),
@@ -221,7 +235,7 @@ class _DrawpageState extends State<Drawpage> {
                     onTap: updateState(7),
                     title: 'Notes',
                     icon: CupertinoIcons.doc_text),
-                    AppBarTile(
+                AppBarTile(
                     index: 2,
                     onTap: updateState(0),
                     title: 'Biographie',
@@ -265,15 +279,15 @@ class AppBarTile extends StatelessWidget {
         leading: Icon(
           icon,
           size: 25,
-         // color: AppColor.blackcolor2,
+          // color: AppColor.blackcolor2,
         ),
         trailing: Icon(
           CupertinoIcons.right_chevron,
-       //   color: Color.fromARGB(79, 0, 0, 0),
+          //   color: Color.fromARGB(79, 0, 0, 0),
         ),
         title: Text(
           title,
-         // style: TextStyle(color: AppColor.blackcolor2),
+          // style: TextStyle(color: AppColor.blackcolor2),
         ),
       ),
     );
