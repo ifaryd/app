@@ -1,18 +1,18 @@
-class Predications {
-  int id;
-  String titre;
-  String sous_titre;
-  int numero;
-  String lien_audio;
-  String nom_audio;
-  String lien_video;
-  int duree;
-  String chapitre;
-  String couverture;
-  String sermon_similaire;
-  int langue_id;
+class classPredications {
+  String? id;
+  String? titre;
+  String? sous_titre;
+  String? numero;
+  String? lien_audio;
+  String? nom_audio;
+  String? lien_video;
+  String? duree;
+  String? chapitre;
+  String? couverture;
+  String? sermon_similaire;
+  String? langue_id;
 
-  Predications(
+  classPredications(
       this.id,
       this.titre,
       this.sous_titre,
@@ -43,7 +43,7 @@ class Predications {
     };
   }
 
-  factory Predications.fromMap(Map<String, dynamic> map) => Predications(
+  factory classPredications.fromMap(Map<String, dynamic> map) => classPredications(
       map['id'],
       map['titre'],
       map['sous_titre'],

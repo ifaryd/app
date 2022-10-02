@@ -13,7 +13,6 @@ class _AudioPkpState extends State<AudioPkp> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColor.whitecolor,
       child: Center(
           child: Text(
         "Audio",

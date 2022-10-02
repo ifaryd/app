@@ -1,10 +1,14 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_animation_transition/animations/right_to_left_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
+import 'package:pkp_android_app/Screen/MenuItems/Contact.dart';
 import 'package:pkp_android_app/Screen/MenuItems/Interviews.dart';
+import 'package:pkp_android_app/Screen/MenuItems/Notes.dart';
 import 'package:pkp_android_app/Screen/MenuItems/Serviteurs.dart';
+import 'package:pkp_android_app/Screen/MenuItems/Temoignages.dart';
 import 'package:pkp_android_app/Screen/MenuItems/photos.dart';
 import 'package:pkp_android_app/const.dart';
 
@@ -62,19 +66,19 @@ class _DrawpageState extends State<Drawpage> {
             pageAnimationType: RightToLeftTransition()));
       }else if (index == 6) {
         Navigator.of(context).push(PageAnimationTransition(
-            page: Cantiques(
+            page: Temoignages(
               title: 'Témoignages',
             ),
             pageAnimationType: RightToLeftTransition()));
       }else if (index == 7) {
         Navigator.of(context).push(PageAnimationTransition(
-            page: Cantiques(
+            page: Notes(
               title: 'Mes Notes',
             ),
             pageAnimationType: RightToLeftTransition()));
       }else if (index == 8) {
         Navigator.of(context).push(PageAnimationTransition(
-            page: Cantiques(
+            page: Contacts(
               title: 'Contacts',
             ),
             pageAnimationType: RightToLeftTransition()));
@@ -106,6 +110,8 @@ class _DrawpageState extends State<Drawpage> {
       });
     }
   }
+    final Duration initialDelay = Duration(milliseconds:200);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -155,12 +161,12 @@ class _DrawpageState extends State<Drawpage> {
         onTap: () {
         
         },
-        leading:Text(''),
+        leading:Icon(CupertinoIcons.circle_lefthalf_fill),
         trailing:(themeLight)?TextButton.icon(onPressed:(){
-          setState(() {
+          setState(() { 
             themeLight=!themeLight;
                         (themeLight)? AdaptiveTheme.of(context).setLight():   AdaptiveTheme.of(context).setDark();
-
+      
           });
         }, icon:Icon(CupertinoIcons.sun_max_fill,size:27,), label:Text('Light',style:TextStyle(fontSize:15),)):TextButton.icon(onPressed:(){
            setState(() {
@@ -174,7 +180,6 @@ class _DrawpageState extends State<Drawpage> {
       ),
     ),
                 Divider(
-                  color: AppColor.blackcolor,
                 ),
                 AppBarTile(
                   index: 0,

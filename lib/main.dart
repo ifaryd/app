@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pkp_android_app/Screen/SplashScreen.dart';
-import 'package:pkp_android_app/Screen/langue.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:pkp_android_app/const.dart';
+
+import 'Screen/Choix_Lang.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -30,17 +30,18 @@ class MyApp extends StatelessWidget {
             textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           foregroundColor: Color.fromARGB(169, 33, 149, 243),
+          
         ),
       ),
       ),
-      initial: AdaptiveThemeMode.dark,
+      initial: AdaptiveThemeMode.light,
       builder: (theme, darkTheme) =>  MaterialApp(
       debugShowCheckedModeBanner: false,
       theme:theme,
       darkTheme:darkTheme,
       routes:{
-        '/':((context) => const SplashScreen()),
-        'choselanguage':((context) => const Langue()),
+        //'/':((context) => const SplashScreen()),
+        '/':((context) => const ChoixLangue()),
       },
     )
     );

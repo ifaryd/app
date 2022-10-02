@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:pkp_android_app/const.dart';
 
 class PredPages extends StatefulWidget {
-  const PredPages({Key? key}) : super(key: key);
-
+  const PredPages({Key? key, required this.title}) : super(key: key);
+  final String title;
   @override
   State<PredPages> createState() => PredPagesState();
 }
@@ -14,7 +14,7 @@ class PredPages extends StatefulWidget {
 class PredPagesState extends State<PredPages> {
   @override
   Widget build(BuildContext context) {
-   
+   double widht=MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -22,7 +22,8 @@ class PredPagesState extends State<PredPages> {
           style: TextStyle(fontSize:17),
         ),
        // centerTitle: true,
-        leadingWidth: 90,
+        leadingWidth: 95,
+        
         leading: TextButton.icon(
             onPressed: () {
               Navigator.pop(context);
@@ -42,10 +43,9 @@ class PredPagesState extends State<PredPages> {
              constraints:BoxConstraints.tightForFinite(width:65),
              position:PopupMenuPosition.under,
              itemBuilder:((context) => [
-               PopupMenuItem(value:0, child:IconButton(onPressed:(){}, icon:Icon(Icons.settings_outlined))),
-               PopupMenuItem(value:1,child:IconButton(onPressed:(){}, icon:Icon(CupertinoIcons.exclamationmark_circle))),
+               PopupMenuItem(value:0, child:IconButton(onPressed:(){}, icon:Icon(Icons.copy_all))),
                PopupMenuItem(value:2,child:IconButton(onPressed:(){}, icon:Icon(Icons.search_outlined))),
-               PopupMenuItem(value:3,child:IconButton(onPressed:(){}, icon:Icon(Icons.bookmark_add_outlined))),
+               PopupMenuItem(value:3,child:IconButton(onPressed:(){}, icon:Icon(Icons.download))),
                PopupMenuItem(value:4,child:IconButton(onPressed:(){}, icon:Icon(CupertinoIcons.volume_up))),
              ]),
            ),
@@ -53,7 +53,19 @@ class PredPagesState extends State<PredPages> {
          
         ],
       ),
-      body: Text(''),
+      body:Column(
+        children: [
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                width:widht*0.66,
+                child:Text(widget.title,textAlign:TextAlign.center,style:TextStyle(fontSize:32,fontWeight:FontWeight.bold),),
+              ),
+            ),
+          )
+        ],
+      )
     );
   }
 }

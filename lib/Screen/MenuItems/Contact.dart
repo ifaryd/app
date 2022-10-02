@@ -2,6 +2,8 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pkp_android_app/Dbmanage/dbmanage.dart';
+import 'package:pkp_android_app/model/pays.dart';
 
 import '../../const.dart';
 
@@ -12,17 +14,26 @@ class Contacts extends StatefulWidget {
   State<Contacts> createState() => ContactsState();
 }
 
+
 class ContactsState extends State<Contacts> {
+  List<Classpays>? paysList;
+bool load=true;
+
+@override
+void initState() {
+  print("object");
+  super.initState();
+ 
+    print('getPays');
+
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-            backgroundColor:AppColor.whitecolor,
 
         appBar: AppBar(
-        backgroundColor: AppColor.appbar,
         title: Text(
           widget.title,
-          style: TextStyle(color: AppColor.text),
         ),
         leading: IconButton(
             onPressed: () {
@@ -30,10 +41,22 @@ class ContactsState extends State<Contacts> {
             },
             icon: Icon(
               CupertinoIcons.back,
-              color: AppColor.text,
             )),
       ),
-      body:Center(child:Text("Indisponible pour le moment",style:TextStyle(color:AppColor.blackcolor,fontSize:20),),),
+      body:(load)?Center(child: CircularProgressIndicator()):
+      ListView.separated(
+        itemCount:paysList!.length,
+        separatorBuilder:((context, index) => Divider()),
+        itemBuilder:((context, index) {
+          return ListTile(
+            onTap:(){
+              print("object");
+            },
+            title:Text(paysList![index].nom.toUpperCase()),
+            leading:Icon(CupertinoIcons.flag),
+          );
+        }),
+      )
     );
   }
 }

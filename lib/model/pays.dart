@@ -1,14 +1,14 @@
-class Pays {
-  int id;
+class Classpays {
+  String id;
   String nom;
   String sigle;
 
-  Pays(this.id, this.nom, this.sigle);
+  Classpays(this.id, this.nom, this.sigle);
 
   Map<String, dynamic> toMap() {
     return {'id': id, 'nom': nom, 'sigle': sigle};
   }
 
-  factory Pays.fromMap(Map<String, dynamic> map) =>
-      Pays(map['id'], map['nom'], map['sigle']);
+  factory Classpays.fromMap(Map<String, dynamic> map) =>
+      Classpays(map['id'], map['nom'], map['sigle']);
 }

@@ -1,9 +1,13 @@
 // ignore_for_file: file_names
 
+import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:pkp_android_app/Dbmanage/dbmanage.dart';
 import 'package:pkp_android_app/Screen/predPage.dart';
-import 'package:pkp_android_app/const.dart';
+import 'package:pkp_android_app/model/predications.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class LivrePkp extends StatefulWidget {
   final String title;
@@ -19,7 +23,30 @@ class _LivrePkpState extends State<LivrePkp> {
       predindex = idx;
     });
   }
-
+  List<classPredications>? predList;
+  bool load=true;
+  getallPred()async{
+    predList= await Dbmanage().getPred();
+    print('list num :${predList!.length}');
+   setState(() {
+      load=false;
+   });
+  }
+  final ItemScrollController itemScrollController = ItemScrollController();
+  final itemkey=GlobalKey();
+  Future scrollDown(int index)async{
+   itemScrollController.jumpTo(
+     index:index,
+     );
+  }
+  final Duration initialDelay = Duration(milliseconds:50);
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+      
+         getallPred();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,36 +55,56 @@ class _LivrePkpState extends State<LivrePkp> {
           widget.title,
         ),
         leading: IconButton(
+          splashRadius:1,
             onPressed: () {
               Navigator.pop(context);
             },
             icon: Icon(
               CupertinoIcons.back,
             )),
+            actions: [
+               IconButton(onPressed:(){
+                setState(() {
+                  scrollDown(0);
+                });
+              }, icon: Icon(Icons.keyboard_double_arrow_up_outlined)),
+              IconButton(onPressed:(){
+                setState(() {
+                  scrollDown(predList!.length);
+                });
+              }, icon: Icon(Icons.keyboard_double_arrow_down_sharp))
+            ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(left:10.0),
-        child: ListView.separated(
-          clipBehavior: Clip.none,
+      body:(load)? Center(child:CircularProgressIndicator.adaptive(),): Padding(
+        padding: const EdgeInsets.only(left:1.0),
+        child: ScrollablePositionedList.separated(
+          itemScrollController: itemScrollController,
           separatorBuilder: (BuildContext context, int index) => const Divider(
           ),
-          itemCount: 152,
+          itemCount: (predList!.length),
+          shrinkWrap: true,
           itemBuilder: ((context, index) {
             return InkWell(
               onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: ((context) => PredPages())));
+              Navigator.push(context, MaterialPageRoute(builder: ((context) => PredPages(title:'Kacou ${predList![index].id} : ${predList![index].titre}',))));
               },
-              child: ListTile(
-                title: Text(
-                  "Kacou ${index + 1} : Titre de la prédication",
-                ),
-                trailing: Icon(
-                  CupertinoIcons.right_chevron,
-                ),
-                subtitle: Text(
-                  "Prophète Kacou Philippe",
-                  style: TextStyle(
-                   fontStyle: FontStyle.italic),
+              child: DelayedDisplay(
+                delay:initialDelay ,
+                child: ListTile(
+                  style:ListTileStyle.list,
+                  title:Text(
+                    "Kacou ${predList![index].id} : ${predList![index].titre}",style:TextStyle(fontSize:16,fontWeight:FontWeight.bold),textAlign:TextAlign.center,
+                   
+                  ),
+                  trailing: Icon(
+                    CupertinoIcons.right_chevron,
+                    size:20,
+                  ),
+                  subtitle: Text(
+                    predList![index].sous_titre.toString(),
+                    style: TextStyle(
+                     fontStyle: FontStyle.italic,fontSize:13),
+                  ),
                 ),
               ),
             );
