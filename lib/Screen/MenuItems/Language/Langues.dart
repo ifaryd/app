@@ -20,28 +20,43 @@ class Langues extends StatefulWidget {
 }
 
 class _LanguesState extends State<Langues> {
-List<LangueModel> langList=[];
- Future<List<LangueModel>> getLangues()async{
-    final response =  await http.get(Uri.parse('http://192.168.1.13:8000/api/langues'));
-     if (response.statusCode == 200) {
-        var data = jsonDecode(response.body);
-        var datax = data['data'];
-        print(datax);
-        for (var u in datax) {
-          LangueModel langues=LangueModel(id: u['id'], libelle: u['libelle'], initial: u['initial'], createdAt: u['createdAt'], updatedAt: u['updatedAt'], deletedAt: u['deletedAt']);
+  List<LangueModel> langList = [];
+  Future<List<LangueModel>> getLangues() async {
+    final response =
+        await http.get(Uri.parse('http://127.0.0.1:8000/api/langues'));
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      var datax = data['data'];
+      //print(datax);
+      for (var u in datax) {
+          PkpDatabase.instance.insertLangue(LangueModel(
+            id: u['id'],
+            libelle: u['libelle'],
+            initial: u['initial'],
+            createdAt: u['createdAt'],
+            updatedAt: u['updatedAt'],
+            deletedAt: u['deletedAt']));
+
+        print('apres ajout');
+        LangueModel langues = LangueModel(
+            id: u['id'],
+            libelle: u['libelle'],
+            initial: u['initial'],
+            createdAt: u['createdAt'],
+            updatedAt: u['updatedAt'],
+            deletedAt: u['deletedAt']);
         langList.add(langues);
-        }
-      return langList; 
-      }else{
-        return langList;
       }
- }
+      return langList;
+    } else {
+      return langList;
+    }
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    
   }
 
   @override
@@ -51,71 +66,82 @@ List<LangueModel> langList=[];
       children: [
         SizedBox(height: 20),
         Padding(
-          padding: const EdgeInsets.only(left: 8.0),
-          child:Column(
-            mainAxisAlignment:MainAxisAlignment.start,
-            crossAxisAlignment:CrossAxisAlignment.start,
-            children: [
+            padding: const EdgeInsets.only(left: 8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
                 Text("TELECHARGER LA LANGUE DE LA BASE DE DONNEES",
-              style: TextStyle(color: AppColor.text, fontSize: 13)),
-              GestureDetector(
-                  onTap:(){
-                    setState(() {
-                    });
-                  },
-                child: Text("Cliquer pour rechercher une mis à jour",style:TextStyle(color:Colors.blue),)),
-            ],
-          )
-        ),
+                    style: TextStyle(color: AppColor.text, fontSize: 13)),
+                GestureDetector(
+                    onTap: () {
+                      setState(() {});
+                    },
+                    child: Text(
+                      "Cliquer pour rechercher une mis à jour",
+                      style: TextStyle(color: Colors.blue),
+                    )),
+              ],
+            )),
         SizedBox(height: 3),
         Column(
           children: [
-        
-                FutureBuilder(
-                  future: getLangues(),
-                  builder:((context, snapshot){
-                    if(snapshot.hasData){
-                      return ListView.separated(
-                      shrinkWrap:true,
-                        padding: EdgeInsets.zero,
-                        itemCount:langList.length,
-                        separatorBuilder:
-                            (BuildContext context, int index) =>
-                                const Divider(),
-                        itemBuilder: (BuildContext context, int index) {
-                          return Padding(
-                            padding: const EdgeInsets.only(left:8.0),
-                            child: GestureDetector(
-                              onTap: () {
-                              Navigator.of(context).push(
-                                  PageAnimationTransition(
-                                      page: Drawpage(),
-                                      pageAnimationType:
-                                          RightToLeftTransition()));
-                            },
-                              child: Row(
-                                mainAxisAlignment:MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(langList[index].libelle.toString(),style: TextStyle(fontSize:17),),
-                                  Row(
-                                    children: [
-                                      Text("Nouveau",style:TextStyle(color:AppColor.blue,),),
-                                      IconButton(onPressed:(){}, icon: Icon(Icons.file_download_outlined)),
-                                      IconButton(onPressed:(){}, icon: Icon(CupertinoIcons.exclamationmark_circle)),
-                                    ],
-                                  )
-                                ],
+            FutureBuilder(
+              future: getLangues(),
+              builder: ((context, snapshot) {
+                if (snapshot.hasData) {
+                  return ListView.separated(
+                    shrinkWrap: true,
+                    padding: EdgeInsets.zero,
+                    itemCount: langList.length,
+                    separatorBuilder: (BuildContext context, int index) =>
+                        const Divider(),
+                    itemBuilder: (BuildContext context, int index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(PageAnimationTransition(
+                                page: Drawpage(),
+                                pageAnimationType: RightToLeftTransition()));
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                langList[index].libelle.toString(),
+                                style: TextStyle(fontSize: 17),
                               ),
-                            ),
-                          );
-                        },
+                              Row(
+                                children: [
+                                  Text(
+                                    "Nouveau",
+                                    style: TextStyle(
+                                      color: AppColor.blue,
+                                    ),
+                                  ),
+                                  IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(Icons.file_download_outlined)),
+                                  IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(CupertinoIcons
+                                          .exclamationmark_circle)),
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
                       );
-                    }else
-                    {
-                      return Center(child:Text("Aucune langue dans la db"),);
-                    }
-                  }),
-                )
+                    },
+                  );
+                } else {
+                  return Center(
+                    child: Text("Aucune langue dans la db"),
+                  );
+                }
+              }),
+            )
           ],
         ),
         Expanded(
