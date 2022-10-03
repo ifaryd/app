@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:pkp_android_app/Dbmanage/localDb.dart';
 import 'package:pkp_android_app/const.dart';
 
 import 'Screen/Choix_Lang.dart';
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+ await SqfliteDb().db;
   runApp(const MyApp());
 }
 
@@ -30,7 +33,7 @@ class MyApp extends StatelessWidget {
             textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           foregroundColor: Color.fromARGB(169, 33, 149, 243),
-          
+
         ),
       ),
       ),

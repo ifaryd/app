@@ -74,11 +74,14 @@ List<LangueModel> langList=[];
                 FutureBuilder(
                   future: getLangues(),
                   builder:((context, snapshot){
-                    if(snapshot.hasData){
+                   if(snapshot.connectionState=='Waiting'){
+                     return CircularProgressIndicator(color:Colors.blue);
+                   }else{
+                      if(snapshot.hasData){
                       return ListView.separated(
                       shrinkWrap:true,
                         padding: EdgeInsets.zero,
-                        itemCount:langList.length,
+                        itemCount:langList.length, 
                         separatorBuilder:
                             (BuildContext context, int index) =>
                                 const Divider(),
@@ -114,6 +117,7 @@ List<LangueModel> langList=[];
                     {
                       return Center(child:Text("Aucune langue dans la db"),);
                     }
+                   }
                   }),
                 )
           ],
