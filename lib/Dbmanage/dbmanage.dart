@@ -1,8 +1,12 @@
 import 'package:flutter/widgets.dart';
 import 'package:path/path.dart';
 import 'package:pkp_android_app/model/assemblees.dart';
+import 'package:pkp_android_app/model/charges.dart';
 import 'package:pkp_android_app/model/pays.dart';
 import 'package:pkp_android_app/model/predications.dart';
+import 'package:pkp_android_app/model/types.dart';
+import 'package:pkp_android_app/model/videos.dart';
+import 'package:pkp_android_app/model/villes.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../model/langues.dart';
@@ -38,72 +42,106 @@ class PkpDatabase {
           .whenComplete(() {
         print("TABLE PAYS CREE");
       });
-      await db.execute(
-          'CREATE TABLE "assemblees" ("id" integer not null primary key autoincrement, "nom" varchar, "ville_id" integer not null, "localisation" text, "addresse" text, "photo" text, "created_at" datetime, "updated_at" datetime, "deleted_at" datetime, foreign key("ville_id") references "villes"("id") on delete cascade on update cascade)').whenComplete(() {
+      await db
+          .execute(
+              'CREATE TABLE "assemblees" ("id" integer not null primary key autoincrement, "nom" varchar, "ville_id" integer not null, "localisation" text, "addresse" text, "photo" text, "created_at" datetime, "updated_at" datetime, "deleted_at" datetime, foreign key("ville_id") references "villes"("id") on delete cascade on update cascade)')
+          .whenComplete(() {
         print("TABLE assemblees CREE");
       });
-      await db.execute(
-          'CREATE TABLE "langues" ("id" integer not null primary key autoincrement, "libelle" varchar not null, "initial" varchar not null, "created_at" datetime, "updated_at" datetime, "deleted_at" datetime)').whenComplete(() {
+      await db
+          .execute(
+              'CREATE TABLE "langues" ("id" integer not null primary key autoincrement, "libelle" varchar not null, "initial" varchar not null, "created_at" datetime, "updated_at" datetime, "deleted_at" datetime)')
+          .whenComplete(() {
         print("TABLE langues CREE");
       });
-      await db.execute(
-          'CREATE TABLE "predications" ("id" integer not null primary key autoincrement, "titre" varchar not null, "sous_titre" varchar, "numero" integer, "lien_audio" text, "nom_audio" text, "lien_video" text, "duree" integer, "chapitre" varchar, "couverture" text, "sermon_similaire" text, "langue_id" integer, "created_at" datetime, "updated_at" datetime, "deleted_at" datetime, foreign key("langue_id") references "langues"("id") on delete cascade on update cascade)').whenComplete(() {
+      await db
+          .execute(
+              'CREATE TABLE "predications" ("id" integer not null primary key autoincrement, "titre" varchar not null, "sous_titre" varchar, "numero" integer, "lien_audio" text, "nom_audio" text, "lien_video" text, "duree" integer, "chapitre" varchar, "couverture" text, "sermon_similaire" text, "langue_id" integer, "created_at" datetime, "updated_at" datetime, "deleted_at" datetime, foreign key("langue_id") references "langues"("id") on delete cascade on update cascade)')
+          .whenComplete(() {
         print("TABLE predications CREE");
       });
-      await db.execute(
-          'CREATE TABLE "actualites" ("id" integer not null primary key autoincrement, "miniature" text, "contenu" text not null, "video" text, "langue_id" integer not null, "created_at" datetime, "updated_at" datetime, "deleted_at" datetime, foreign key("langue_id") references "langues"("id") on delete cascade on update cascade)').whenComplete(() {
+      await db
+          .execute(
+              'CREATE TABLE "actualites" ("id" integer not null primary key autoincrement, "miniature" text, "contenu" text not null, "video" text, "langue_id" integer not null, "created_at" datetime, "updated_at" datetime, "deleted_at" datetime, foreign key("langue_id") references "langues"("id") on delete cascade on update cascade)')
+          .whenComplete(() {
         print("TABLE actualites CREE");
       });
-      await db.execute(
-          'CREATE TABLE "cantiques" ("id" integer not null primary key autoincrement, "titre" text not null, "lien_audio" text not null, "nom_fichier" text, "contenu" text, "duree" integer, "langue_id" integer, "user_id" integer not null, "created_at" datetime, "updated_at" datetime, "deleted_at" datetime, foreign key("langue_id") references "langues"("id") on delete cascade on update cascade, foreign key("user_id") references "users"("id") on delete cascade on update cascade)').whenComplete(() {
+      await db
+          .execute(
+              'CREATE TABLE "cantiques" ("id" integer not null primary key autoincrement, "titre" text not null, "lien_audio" text not null, "nom_fichier" text, "contenu" text, "duree" integer, "langue_id" integer, "user_id" integer not null, "created_at" datetime, "updated_at" datetime, "deleted_at" datetime, foreign key("langue_id") references "langues"("id") on delete cascade on update cascade, foreign key("user_id") references "users"("id") on delete cascade on update cascade)')
+          .whenComplete(() {
         print("TABLE cantiques CREE");
       });
-      await db.execute(
-          'CREATE TABLE "charge_users" ("id" integer not null primary key autoincrement, "charge_id" integer not null, "user_id" integer not null, "pays_id" integer, "assemblee_id" integer, "principal" tinyint(1) not null, "position_chantre" integer, "created_at" datetime, "updated_at" datetime, "deleted_at" datetime, foreign key("charge_id") references "charges"("id") on delete cascade on update cascade, foreign key("user_id") references "users"("id") on delete cascade on update cascade, foreign key("pays_id") references "pays"("id") on delete cascade on update cascade, foreign key("assemblee_id") references "assemblees"("id") on delete cascade on update cascade)').whenComplete(() {
+      await db
+          .execute(
+              'CREATE TABLE "charge_users" ("id" integer not null primary key autoincrement, "charge_id" integer not null, "user_id" integer not null, "pays_id" integer, "assemblee_id" integer, "principal" tinyint(1) not null, "position_chantre" integer, "created_at" datetime, "updated_at" datetime, "deleted_at" datetime, foreign key("charge_id") references "charges"("id") on delete cascade on update cascade, foreign key("user_id") references "users"("id") on delete cascade on update cascade, foreign key("pays_id") references "pays"("id") on delete cascade on update cascade, foreign key("assemblee_id") references "assemblees"("id") on delete cascade on update cascade)')
+          .whenComplete(() {
         print("TABLE charge_users CREE");
       });
-      await db.execute(
-          'CREATE TABLE "charges" ("id" integer not null primary key autoincrement, "libelle" varchar not null, "description" varchar, "created_at" datetime, "updated_at" datetime, "deleted_at" datetime)').whenComplete(() {
+      await db
+          .execute(
+              'CREATE TABLE "charges" ("id" integer not null primary key autoincrement, "libelle" varchar not null, "description" varchar, "created_at" datetime, "updated_at" datetime, "deleted_at" datetime)')
+          .whenComplete(() {
         print("TABLE charges CREE");
       });
-      await db.execute(
-          'CREATE TABLE "concordances" ("id" integer not null primary key autoincrement, "verset_from_id" integer not null, "verset_to_id" integer not null, "created_at" datetime, "updated_at" datetime, "deleted_at" datetime, foreign key("verset_from_id") references "versets"("id") on delete cascade on update cascade, foreign key("verset_to_id") references "versets"("id") on delete cascade on update cascade)').whenComplete(() {
+      await db
+          .execute(
+              'CREATE TABLE "concordances" ("id" integer not null primary key autoincrement, "verset_from_id" integer not null, "verset_to_id" integer not null, "created_at" datetime, "updated_at" datetime, "deleted_at" datetime, foreign key("verset_from_id") references "versets"("id") on delete cascade on update cascade, foreign key("verset_to_id") references "versets"("id") on delete cascade on update cascade)')
+          .whenComplete(() {
         print("TABLE concordances CREE");
       });
-      await db.execute(
-          'CREATE TABLE "confirmes" ("id" integer not null primary key autoincrement, "user_id" integer not null, "pays_id" integer not null, "video_id" integer, "langue_id" integer, "details" text, "created_at" datetime, "updated_at" datetime, "deleted_at" datetime, foreign key("user_id") references "users"("id") on delete cascade on update cascade, foreign key("pays_id") references "pays"("id") on delete cascade on update cascade, foreign key("video_id") references "videos"("id") on delete cascade on update cascade, foreign key("langue_id") references "langues"("id") on delete cascade on update cascade)').whenComplete(() {
+      await db
+          .execute(
+              'CREATE TABLE "confirmes" ("id" integer not null primary key autoincrement, "user_id" integer not null, "pays_id" integer not null, "video_id" integer, "langue_id" integer, "details" text, "created_at" datetime, "updated_at" datetime, "deleted_at" datetime, foreign key("user_id") references "users"("id") on delete cascade on update cascade, foreign key("pays_id") references "pays"("id") on delete cascade on update cascade, foreign key("video_id") references "videos"("id") on delete cascade on update cascade, foreign key("langue_id") references "langues"("id") on delete cascade on update cascade)')
+          .whenComplete(() {
         print("TABLE confirmes CREE");
       });
-      await db.execute(
-          'CREATE TABLE "langue_pays" ("id" integer not null primary key autoincrement, "langue_id" integer not null, "pays_id" integer not null, "principal" tinyint(1) not null, "created_at" datetime, "updated_at" datetime, "deleted_at" datetime, foreign key("langue_id") references "langues"("id") on delete cascade on update cascade, foreign key("pays_id") references "pays"("id") on delete cascade on update cascade)').whenComplete(() {
+      await db
+          .execute(
+              'CREATE TABLE "langue_pays" ("id" integer not null primary key autoincrement, "langue_id" integer not null, "pays_id" integer not null, "principal" tinyint(1) not null, "created_at" datetime, "updated_at" datetime, "deleted_at" datetime, foreign key("langue_id") references "langues"("id") on delete cascade on update cascade, foreign key("pays_id") references "pays"("id") on delete cascade on update cascade)')
+          .whenComplete(() {
         print("TABLE langue_pays CREE");
       });
-      await db.execute(
-          'CREATE TABLE "photos" ("id" integer not null primary key autoincrement, "url" text not null, "lieu" text, "description" text, "langue_id" integer, "created_at" datetime, "updated_at" datetime, "deleted_at" datetime, foreign key("langue_id") references "langues"("id") on delete cascade on update cascade)').whenComplete(() {
+      await db
+          .execute(
+              'CREATE TABLE "photos" ("id" integer not null primary key autoincrement, "url" text not null, "lieu" text, "description" text, "langue_id" integer, "created_at" datetime, "updated_at" datetime, "deleted_at" datetime, foreign key("langue_id") references "langues"("id") on delete cascade on update cascade)')
+          .whenComplete(() {
         print("TABLE photos CREE");
       });
-      await db.execute(
-          'CREATE TABLE "temoignages" ("id" integer not null primary key autoincrement, "titre" text, "lien_video" text, "photo" text, "contenu" text, "langue_id" integer, "created_at" datetime, "updated_at" datetime, "deleted_at" datetime, foreign key("langue_id") references "langues"("id") on delete cascade on update cascade)').whenComplete(() {
+      await db
+          .execute(
+              'CREATE TABLE "temoignages" ("id" integer not null primary key autoincrement, "titre" text, "lien_video" text, "photo" text, "contenu" text, "langue_id" integer, "created_at" datetime, "updated_at" datetime, "deleted_at" datetime, foreign key("langue_id") references "langues"("id") on delete cascade on update cascade)')
+          .whenComplete(() {
         print("TABLE temoignages CREE");
       });
-      await db.execute(
-          'CREATE TABLE "types" ("id" integer not null primary key autoincrement, "libelle" varchar not null, "description" text, "created_at" datetime, "updated_at" datetime, "deleted_at" datetime)').whenComplete(() {
+      await db
+          .execute(
+              'CREATE TABLE "types" ("id" integer not null primary key autoincrement, "libelle" varchar not null, "description" text, "created_at" datetime, "updated_at" datetime, "deleted_at" datetime)')
+          .whenComplete(() {
         print("TABLE types CREE");
       });
-      await db.execute(
-          'CREATE TABLE "users" ("id" integer not null primary key autoincrement, "first_name" varchar not null, "last_name" varchar, "telephone" varchar, "avatar" text, "facebook" text, "youtube" text, "email" varchar, "email_verified_at" datetime, "password" varchar, "remember_token" varchar, "created_at" datetime, "updated_at" datetime, "deleted_at" datetime)').whenComplete(() {
+      await db
+          .execute(
+              'CREATE TABLE "users" ("id" integer not null primary key autoincrement, "first_name" varchar not null, "last_name" varchar, "telephone" varchar, "avatar" text, "facebook" text, "youtube" text, "email" varchar, "email_verified_at" datetime, "password" varchar, "remember_token" varchar, "created_at" datetime, "updated_at" datetime, "deleted_at" datetime)')
+          .whenComplete(() {
         print("TABLE users CREE");
       });
-      await db.execute(
-          'CREATE TABLE "versets" ("id" integer not null primary key autoincrement, "numero" integer not null, "contenu" text not null, "info" text, "predication_id" integer, "created_at" datetime, "updated_at" datetime, "deleted_at" datetime, foreign key("predication_id") references "predications"("id") on delete cascade on update cascade)').whenComplete(() {
+      await db
+          .execute(
+              'CREATE TABLE "versets" ("id" integer not null primary key autoincrement, "numero" integer not null, "contenu" text not null, "info" text, "predication_id" integer, "created_at" datetime, "updated_at" datetime, "deleted_at" datetime, foreign key("predication_id") references "predications"("id") on delete cascade on update cascade)')
+          .whenComplete(() {
         print("TABLE versets CREE");
       });
-      await db.execute(
-          'CREATE TABLE "videos" ("id" integer not null primary key autoincrement, "titre" text not null, "url" text not null, "lieu" text, "description" text, "type_id" integer, "langue_id" integer, "created_at" datetime, "updated_at" datetime, "deleted_at" datetime, foreign key("type_id") references "types"("id") on delete cascade on update cascade, foreign key("langue_id") references "langues"("id") on delete cascade on update cascade)').whenComplete(() {
+      await db
+          .execute(
+              'CREATE TABLE "videos" ("id" integer not null primary key autoincrement, "titre" text not null, "url" text not null, "lieu" text, "description" text, "type_id" integer, "langue_id" integer, "created_at" datetime, "updated_at" datetime, "deleted_at" datetime, foreign key("type_id") references "types"("id") on delete cascade on update cascade, foreign key("langue_id") references "langues"("id") on delete cascade on update cascade)')
+          .whenComplete(() {
         print("TABLE videos CREE");
       });
-      await db.execute(
-          'CREATE TABLE "villes" ("id" integer not null primary key autoincrement, "libelle" varchar not null, "description" text, "pays_id" integer, "created_at" datetime, "updated_at" datetime, "deleted_at" datetime, foreign key("pays_id") references "pays"("id") on delete cascade on update cascade)').whenComplete(() {
+      await db
+          .execute(
+              'CREATE TABLE "villes" ("id" integer not null primary key autoincrement, "libelle" varchar not null, "description" text, "pays_id" integer, "created_at" datetime, "updated_at" datetime, "deleted_at" datetime, foreign key("pays_id") references "pays"("id") on delete cascade on update cascade)')
+          .whenComplete(() {
         print("TABLE villes CREE");
       });
     }, version: 1);
@@ -113,19 +151,52 @@ class PkpDatabase {
 //---INSERTION
   void insertPays(Paysmodel pays) async {
     final Database db = await database;
-    await db.insert(
+    await db
+        .insert(
       'pays',
       pays.toJson(),
       conflictAlgorithm: ConflictAlgorithm.replace,
-    );
+    )
+        .whenComplete(() {
+      print("Langue terminé");
+    });
   }
+
+  void insertVilles(Villemodel villes) async {
+    final Database db = await database;
+    await db
+        .insert(
+      'villes',
+      villes.toJson(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    )
+        .whenComplete(() {
+      print("villes terminé");
+    });
+  }
+
+  void insertAssemb(assemblesmodel assemblees) async {
+    final Database db = await database;
+    await db
+        .insert(
+      'assemblees',
+      assemblees.toJson(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    )
+        .whenComplete(() {
+      print("assembles terminé");
+    });
+  }
+
   void insertPred(ModelPredications predications) async {
     final Database db = await database;
-    await db.insert(
+    await db
+        .insert(
       'predications',
       predications.toJson(),
       conflictAlgorithm: ConflictAlgorithm.replace,
-    ).whenComplete(() {
+    )
+        .whenComplete(() {
       print("Prediactions ajouté");
     });
   }
@@ -139,13 +210,50 @@ class PkpDatabase {
     );
   }
 
-  void insertAssemblees(ModelAssemblee assemblees) async {
+  void insertTypes(TypesModel type) async {
+    final Database db = await database;
+    await db
+        .insert(
+          'types',
+          type.toJson(),
+          conflictAlgorithm: ConflictAlgorithm.replace,
+        )
+        .whenComplete(() => print('Types terminé'));
+  }
+
+  void insertAssemblees(assemblesmodel assemblees) async {
     final Database db = await database;
     await db.insert(
       'assemblees',
       assemblees.toJson(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+  }
+
+  void insertVideo(VideoModel videos) async {
+    final Database db = await database;
+    await db
+        .insert(
+      'videos',
+      videos.toJson(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    )
+        .whenComplete(() {
+      print("Video download");
+    });
+  }
+
+  void insertCharges(ChargeModel charges) async {
+    final Database db = await database;
+    await db
+        .insert(
+      'charges',
+      charges.toJson(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    )
+        .whenComplete(() {
+      print("charges download");
+    });
   }
 
 //---UPDATE
@@ -161,10 +269,10 @@ class PkpDatabase {
         where: "id = ?", whereArgs: [langues.id]);
   }
 
-  void updateAssemblees(ModelAssemblee assemblees) async {
+  void updateAssemblees(assemblesmodel assemblees) async {
     final Database db = await database;
     await db.update("assemblees", assemblees.toJson(),
-        where: "id = ?", whereArgs: [assemblees.data]);
+        where: "id = ?", whereArgs: [assemblees.id]);
   }
 
 //---DELETE
@@ -197,11 +305,11 @@ class PkpDatabase {
     return listlangues;
   }
 
-  Future<List<ModelAssemblee>> listeAssemblees() async {
+  Future<List<assemblesmodel>> listeAssemblees() async {
     final Database db = await database;
     final List<Map<String, dynamic>> maps = await db.query('assemblees');
-    List<ModelAssemblee> listeassemblees = List.generate(maps.length, (i) {
-      return ModelAssemblee.fromJson(maps[i]);
+    List<assemblesmodel> listeassemblees = List.generate(maps.length, (i) {
+      return assemblesmodel.fromJson(maps[i]);
     });
     return listeassemblees;
   }

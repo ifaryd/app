@@ -1,73 +1,49 @@
-// To parse required this.JSON data, do
-//
-//     final modelAssemblee = modelAssembleeFromJson(jsonString);
+class assemblesmodel {
+  int? id;
+  String? nom;
+  int? villeId;
+  String? localisation;
+  String? addresse;
+  String? photo;
+  String? createdAt;
+  String? updatedAt;
+  Null? deletedAt;
 
-import 'dart:convert';
+  assemblesmodel(
+      {
+      required this.id,
+      required this.nom,
+      required this.villeId,
+      required this.localisation,
+      required this.addresse,
+      required this.photo,
+      required this.createdAt,
+      required this.updatedAt,
+      required this.deletedAt});
 
-ModelAssemblee modelAssembleeFromJson(String str) => ModelAssemblee.fromJson(json.decode(str));
+  assemblesmodel.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    nom = json['nom'];
+    villeId = json['ville_id'];
+    localisation = json['localisation'];
+    addresse = json['addresse'];
+    photo = json['photo'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    deletedAt = json['deleted_at'];
+  }
 
-String modelAssembleeToJson(ModelAssemblee data) => json.encode(data.toJson());
-
-class ModelAssemblee {
-    ModelAssemblee({
-        required this.data,
-    });
-
-    List<Datum> data;
-
-    factory ModelAssemblee.fromJson(Map<String, dynamic> json) => ModelAssemblee(
-        data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
-    );
-
-    Map<String, dynamic> toJson() => {
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
-    };
-}
-
-class Datum {
-    Datum({
-        required this.id,
-        required this.nom,
-        required this.villeId,
-        required this.localisation,
-        required this.addresse,
-        required this.photo,
-        required this.createdAt,
-        required this.updatedAt,
-        required this.deletedAt,
-    });
-
-    int id;
-    String nom;
-    int villeId;
-    dynamic localisation;
-    String addresse;
-    String photo;
-    DateTime createdAt;
-    DateTime updatedAt;
-    dynamic deletedAt;
-
-    factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-        id: json["id"],
-        nom: json["nom"],
-        villeId: json["ville_id"],
-        localisation: json["localisation"],
-        addresse: json["addresse"],
-        photo: json["photo"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
-        deletedAt: json["deleted_at"],
-    );
-
-    Map<String, dynamic> toJson() => {
-        "id": id,
-        "nom": nom,
-        "ville_id": villeId,
-        "localisation": localisation,
-        "addresse": addresse,
-        "photo": photo,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
-        "deleted_at": deletedAt,
-    };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['nom'] = this.nom;
+    data['ville_id'] = this.villeId;
+    data['localisation'] = this.localisation;
+    data['addresse'] = this.addresse;
+    data['photo'] = this.photo;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    data['deleted_at'] = this.deletedAt;
+    return data;
+  }
 }

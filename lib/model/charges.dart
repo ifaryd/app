@@ -1,14 +1,36 @@
-class Charges {
-  int id;
-  String libelle;
-  String description;
+class ChargeModel {
+  int? id;
+  String? libelle;
+  String? description;
+  String? createdAt;
+  String? updatedAt;
+  Null? deletedAt;
 
-  Charges(this.id, this.libelle, this.description);
+  ChargeModel(
+      {required this.id,
+      required this.libelle,
+      required this.description,
+      required this.createdAt,
+      required this.updatedAt,
+      required this.deletedAt});
 
-  Map<String, dynamic> toMap() {
-    return {'id': id, 'libelle': libelle, 'description': description};
+  ChargeModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    libelle = json['libelle'];
+    description = json['description'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    deletedAt = json['deleted_at'];
   }
 
-  factory Charges.fromMap(Map<String, dynamic> map) =>
-      Charges(map['id'], map['libelle'], map['description']);
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['libelle'] = this.libelle;
+    data['description'] = this.description;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    data['deleted_at'] = this.deletedAt;
+    return data;
+  }
 }

@@ -1,14 +1,50 @@
-class Villes {
+// To parse this JSON data, do
+//
+//     final villemodel = villemodelFromJson(jsonString);
+
+import 'dart:convert';
+
+Villemodel villemodelFromJson(String str) =>
+    Villemodel.fromJson(json.decode(str));
+
+String villemodelToJson(Villemodel data) => json.encode(data.toJson());
+
+class Villemodel {
+  Villemodel({
+   required this.id,
+   required this.libelle,
+   required this.description,
+   required this.paysId,
+   required this.createdAt,
+   required this.updatedAt,
+   required this.deletedAt,
+  });
+
   int id;
   String libelle;
-  int pays_id;
+  dynamic? description;
+  int? paysId;
+  String? createdAt;
+  String? updatedAt;
+  dynamic? deletedAt;
 
-  Villes(this.id, this.libelle, this.pays_id);
+  factory Villemodel.fromJson(Map<String, dynamic> json) => Villemodel(
+        id: json["id"],
+        libelle: json["libelle"],
+        description: json["description"],
+        paysId: json["pays_id"],
+        createdAt: json["created_at"],
+        updatedAt:json["updated_at"],
+        deletedAt: json["deleted_at"],
+      );
 
-  Map<String, dynamic> toMap() {
-    return {'id': id, 'libelle': libelle, 'description': pays_id};
-  }
-
-  factory Villes.fromMap(Map<String, dynamic> map) =>
-      Villes(map['id'], map['libelle'], map['pays_id']);
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "libelle": libelle,
+        "description": description,
+        "pays_id": paysId,
+        "created_at": createdAt,
+        "updated_at": updatedAt,
+        "deleted_at": deletedAt,
+      };
 }
