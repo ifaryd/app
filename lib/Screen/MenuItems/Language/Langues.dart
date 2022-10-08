@@ -3,15 +3,17 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:page_animation_transition/animations/right_to_left_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
 import 'package:pkp_android_app/Screen/drawpage.dart';
 import 'package:http/http.dart' as http;
+import 'package:pkp_android_app/model/predications.dart';
 import '../../../Dbmanage/dbmanage.dart';
 import '../../../const.dart';
+import '../../../lienApi.dart';
 import '../../../model/langues.dart';
-
 class Langues extends StatefulWidget {
   const Langues({super.key});
 
@@ -21,23 +23,29 @@ class Langues extends StatefulWidget {
 
 class _LanguesState extends State<Langues> {
   List<LangueModel> langList = [];
+
+  Future downloadDb() async{
+      
+  }
+
   Future<List<LangueModel>> getLangues() async {
     final response =
-        await http.get(Uri.parse('http://127.0.0.1:8000/api/langues'));
+        await http.get(Uri.parse('${Apilink.url}langues'));
     if (response.statusCode == 200) {
+      langList.removeRange(0, langList.length);
       var data = jsonDecode(response.body);
       var datax = data['data'];
       //print(datax);
       for (var u in datax) {
-          PkpDatabase.instance.insertLangue(LangueModel(
+        PkpDatabase.instance.insertLangue(LangueModel(
             id: u['id'],
             libelle: u['libelle'],
             initial: u['initial'],
             createdAt: u['createdAt'],
             updatedAt: u['updatedAt'],
             deletedAt: u['deletedAt']));
+            
 
-        print('apres ajout');
         LangueModel langues = LangueModel(
             id: u['id'],
             libelle: u['libelle'],
@@ -52,6 +60,23 @@ class _LanguesState extends State<Langues> {
       return langList;
     }
   }
+  Future downloadpred() async {
+    final response =
+        await http.get(Uri.parse('${Apilink.url}predications?langue=1'));
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      var datax = data['data'];
+      for (var u in datax) {
+        PkpDatabase.instance.insertPred(
+          ModelPredications(id: u['id'], titre: u['titre'], sousTitre: u['sousTitre'], numero:u['numero'], lienAudio:u['lienAudio'], nomAudio:u['nomAudio'], lienVideo:u['lienVideo'], duree: u['duree'], chapitre: u['chapitre'], couverture: u['couverture'], sermonSimilaire: u['sermonSimilaire'], langueId: u['langueId'], createdAt: u['createdAt'], updatedAt: u['updatedAt'], deletedAt: u['deletedAt']),
+        );
+     }
+      return "Succes";  
+    } else {
+      return "Error";
+    }
+  }
+  
 
   @override
   void initState() {
@@ -89,56 +114,63 @@ class _LanguesState extends State<Langues> {
             FutureBuilder(
               future: getLangues(),
               builder: ((context, snapshot) {
-                if (snapshot.hasData) {
-                  return ListView.separated(
-                    shrinkWrap: true,
-                    padding: EdgeInsets.zero,
-                    itemCount: langList.length,
-                    separatorBuilder: (BuildContext context, int index) =>
-                        const Divider(),
-                    itemBuilder: (BuildContext context, int index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(PageAnimationTransition(
-                                page: Drawpage(),
-                                pageAnimationType: RightToLeftTransition()));
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                langList[index].libelle.toString(),
-                                style: TextStyle(fontSize: 17),
-                              ),
-                              Row(
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator(color: Colors.blue));
+                } else {
+                  if (snapshot.hasData) {
+                    return ListView.separated(
+                        shrinkWrap: true,
+                        padding: EdgeInsets.zero,
+                        itemCount: langList.length,
+                        separatorBuilder: (BuildContext context, int index) =>
+                            const Divider(),
+                        itemBuilder: (BuildContext context, int index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).push(
+                                    PageAnimationTransition(
+                                        page: Drawpage(),
+                                        pageAnimationType:
+                                            RightToLeftTransition()));
+                              },
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "Nouveau",
-                                    style: TextStyle(
-                                      color: AppColor.blue,
-                                    ),
+                                    langList[index].libelle.toString(),
+                                    style: TextStyle(fontSize: 17),
                                   ),
-                                  IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(Icons.file_download_outlined)),
-                                  IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(CupertinoIcons
-                                          .exclamationmark_circle)),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "Nouveau",
+                                        style: TextStyle(
+                                          color: AppColor.blue,
+                                        ),
+                                      ),
+                                      IconButton(
+                                          onPressed:downloadpred,
+                                          icon: Icon(
+                                              Icons.file_download_outlined)),
+                                      IconButton(
+                                          onPressed: () {},
+                                          icon: Icon(CupertinoIcons
+                                              .exclamationmark_circle)),
+                                    ],
+                                  )
                                 ],
-                              )
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                } else {
-                  return Center(
-                    child: Text("Aucune langue dans la db"),
-                  );
+                              ),
+                            ),
+                          );
+                        });
+                  } else {
+                    return Center(
+                      child: Text("Aucune langue dans la db"),
+                    );
+                  }
                 }
               }),
             )
