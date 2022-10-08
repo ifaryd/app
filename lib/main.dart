@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:pkp_android_app/Dbmanage/dbmanage.dart';
 import 'package:pkp_android_app/Dbmanage/localDb.dart';
 import 'package:pkp_android_app/const.dart';
 
 import 'Screen/Choix_Lang.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
- await SqfliteDb().db;
+ await PkpDatabase.internal().database;
   runApp(const MyApp());
 }
 

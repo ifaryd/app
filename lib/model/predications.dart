@@ -1,59 +1,71 @@
-class classPredications {
-  String? id;
-  String? titre;
-  String? sous_titre;
-  String? numero;
-  String? lien_audio;
-  String? nom_audio;
-  String? lien_video;
-  String? duree;
-  String? chapitre;
-  String? couverture;
-  String? sermon_similaire;
-  String? langue_id;
+class ModelPredications {
+    ModelPredications({
+      required this.id,
+      required this.titre,
+      required this.sousTitre,
+      required this.numero,
+      required this.lienAudio,
+      required this.nomAudio,
+      required this.lienVideo,
+      required this.duree,
+      required this.chapitre,
+      required this.couverture,
+      required this.sermonSimilaire,
+      required this.langueId,
+      required this.createdAt,
+      required this.updatedAt,
+      required this.deletedAt,
+    });
 
-  classPredications(
-      this.id,
-      this.titre,
-      this.sous_titre,
-      this.numero,
-      this.lien_audio,
-      this.nom_audio,
-      this.lien_video,
-      this.duree,
-      this.chapitre,
-      this.couverture,
-      this.sermon_similaire,
-      this.langue_id);
+    int id;
+    String titre;
+    String? sousTitre;
+    int numero;
+    String? lienAudio;
+    String? nomAudio;
+    dynamic? lienVideo;
+    int duree;
+    String chapitre;
+    String? couverture;
+    String? sermonSimilaire;
+    int? langueId;
+    DateTime? createdAt;
+    DateTime? updatedAt;
+    dynamic? deletedAt;
 
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'titre': titre,
-      'sous_titre': sous_titre,
-      'numero': numero,
-      'lien_audio': lien_audio,
-      'nom_audio': nom_audio,
-      'lien_video': lien_video,
-      'duree': duree,
-      'chapitre': chapitre,
-      'couverture': couverture,
-      'sermon_similaire': sermon_similaire,
-      'langue_id': langue_id
+    factory ModelPredications.fromJson(Map<String, dynamic> json) => ModelPredications(
+        id: json["id"],
+        titre: json["titre"],
+        sousTitre: json["sous_titre"],
+        numero: json["numero"],
+        lienAudio: json["lien_audio"],
+        nomAudio: json["nom_audio"],
+        lienVideo: json["lien_video"],
+        duree: json["duree"],
+        chapitre: json["chapitre"],
+        couverture: json["couverture"],
+        sermonSimilaire: json["sermon_similaire"],
+        langueId: json["langue_id"],
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+        deletedAt: json["deleted_at"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "titre": titre,
+        "sous_titre": sousTitre,
+        "numero": numero,
+        "lien_audio": lienAudio,
+        "nom_audio": nomAudio,
+        "lien_video": lienVideo,
+        "duree": duree,
+        "chapitre": chapitre,
+        "couverture": couverture,
+        "sermon_similaire": sermonSimilaire,
+        "langue_id": langueId,
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+        "deleted_at": deletedAt,
     };
-  }
-
-  factory classPredications.fromMap(Map<String, dynamic> map) => classPredications(
-      map['id'],
-      map['titre'],
-      map['sous_titre'],
-      map['numero'],
-      map['lien_audio'],
-      map['nom_audio'],
-      map['lien_video'],
-      map['duree'],
-      map['chapitre'],
-      map['couverture'],
-      map['sermon_similaire'],
-      map['langue_id']);
 }

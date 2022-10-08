@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+/* // ignore_for_file: file_names
 
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,12 +25,12 @@ class _LivrePkpState extends State<LivrePkp> {
   }
   List<classPredications>? predList;
   bool load=true;
-  getallPred()async{
+  /* getallPred()async{
     predList= await Dbmanage().getPred();
     print('list num :${predList!.length}');
    setState(() {
       load=false;
-   });
+   }); */
   }
   final ItemScrollController itemScrollController = ItemScrollController();
   final itemkey=GlobalKey();
@@ -113,4 +113,4 @@ class _LivrePkpState extends State<LivrePkp> {
       ),
     );
   }
-}
+} */
