@@ -1,33 +1,69 @@
-class Cantiques {
-  int id;
-  String titre;
-  String lien_audio;
-  String contenu;
-  int duree;
-  int langue_id;
-  int user_id;
+// To parse this JSON data, do
+//
+//     final modelCantiques = modelCantiquesFromJson(jsonString);
 
-  Cantiques(this.id, this.titre, this.lien_audio, this.contenu, this.duree,
-      this.langue_id, this.user_id);
+import 'dart:convert';
 
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'titre': titre,
-      'lien_audio': lien_audio,
-      'contenu': contenu,
-      'duree': duree,
-      'langue_id': langue_id,
-      'user_id': user_id,
+ModelCantiques modelCantiquesFromJson(String str) => ModelCantiques.fromJson(json.decode(str));
+
+String modelCantiquesToJson(ModelCantiques data) => json.encode(data.toJson());
+
+class ModelCantiques {
+    ModelCantiques({
+      required  this.id,
+      required  this.titre,
+      required  this.lienAudio,
+      required  this.nomFichier,
+      required  this.contenu,
+      required  this.duree,
+      required  this.langueId,
+      required  this.userId,
+      required  this.createdAt,
+      required  this.updatedAt,
+      required  this.deletedAt,
+      required  this.langue,
+    });
+
+    int id;
+    String titre;
+    String lienAudio;
+    String nomFichier;
+    dynamic? contenu;
+    int duree;
+    dynamic? langueId;
+    int userId;
+    DateTime createdAt;
+    DateTime updatedAt;
+    dynamic? deletedAt;
+    dynamic? langue;
+
+    factory ModelCantiques.fromJson(Map<String, dynamic> json) => ModelCantiques(
+        id: json["id"],
+        titre: json["titre"],
+        lienAudio: json["lien_audio"],
+        nomFichier: json["nom_fichier"],
+        contenu: json["contenu"],
+        duree: json["duree"],
+        langueId: json["langue_id"],
+        userId: json["user_id"],
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+        deletedAt: json["deleted_at"],
+        langue: json["langue"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "titre": titre,
+        "lien_audio": lienAudio,
+        "nom_fichier": nomFichier,
+        "contenu": contenu,
+        "duree": duree,
+        "langue_id": langueId,
+        "user_id": userId,
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
+        "deleted_at": deletedAt,
+        "langue": langue,
     };
-  }
-
-  factory Cantiques.fromMap(Map<String, dynamic> map) => Cantiques(
-      map['id'],
-      map['titre'],
-      map['lien_audio'],
-      map['contenu'],
-      map['duree'],
-      map['langue_id'],
-      map['user_id']);
 }

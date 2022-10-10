@@ -29,8 +29,8 @@ class ModelPredications {
     String? couverture;
     String? sermonSimilaire;
     int? langueId;
-    DateTime? createdAt;
-    DateTime? updatedAt;
+    String createdAt;
+    String updatedAt;
     dynamic? deletedAt;
 
     factory ModelPredications.fromJson(Map<String, dynamic> json) => ModelPredications(
@@ -46,8 +46,8 @@ class ModelPredications {
         couverture: json["couverture"],
         sermonSimilaire: json["sermon_similaire"],
         langueId: json["langue_id"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
+        createdAt: json["created_at"],
+        updatedAt: json["updated_at"],
         deletedAt: json["deleted_at"],
     );
 
@@ -64,8 +64,8 @@ class ModelPredications {
         "couverture": couverture,
         "sermon_similaire": sermonSimilaire,
         "langue_id": langueId,
-        "created_at": createdAt?.toIso8601String(),
-        "updated_at": updatedAt?.toIso8601String(),
+        "created_at": createdAt,
+        "updated_at": updatedAt,
         "deleted_at": deletedAt,
     };
 }

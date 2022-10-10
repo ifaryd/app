@@ -1,10 +1,15 @@
 import 'package:flutter/widgets.dart';
 import 'package:path/path.dart';
 import 'package:pkp_android_app/model/assemblees.dart';
+import 'package:pkp_android_app/model/cantiques.dart';
+import 'package:pkp_android_app/model/charge_user.dart';
 import 'package:pkp_android_app/model/charges.dart';
+import 'package:pkp_android_app/model/confirmes.dart';
 import 'package:pkp_android_app/model/pays.dart';
 import 'package:pkp_android_app/model/predications.dart';
+import 'package:pkp_android_app/model/temoignages.dart';
 import 'package:pkp_android_app/model/types.dart';
+import 'package:pkp_android_app/model/versets.dart';
 import 'package:pkp_android_app/model/videos.dart';
 import 'package:pkp_android_app/model/villes.dart';
 import 'package:sqflite/sqflite.dart';
@@ -200,12 +205,32 @@ class PkpDatabase {
       print("Prediactions ajouté");
     });
   }
+  void insertVerset(ModelVerset verset) async {
+    final Database db = await database;
+    await db
+        .insert(
+      'versets',
+      verset.toJson(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    )
+        .whenComplete(() {
+      print("verset ajouté");
+    });
+  }
 
   void insertLangue(LangueModel langue) async {
     final Database db = await database;
     await db.insert(
       'langues',
       langue.toJson(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+  void insertCantiques(ModelCantiques cantiques) async {
+    final Database db = await database;
+    await db.insert(
+      'cantiques',
+      cantiques.toJson(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
@@ -253,6 +278,42 @@ class PkpDatabase {
     )
         .whenComplete(() {
       print("charges download");
+    });
+  }
+  void insertUsers(ModelUsers users) async {
+    final Database db = await database;
+    await db
+        .insert(
+      'users',
+      users.toJson(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    )
+        .whenComplete(() {
+      print("users download");
+    });
+  }
+  void insertConfirmes(ModelConfirmes confirmes) async {
+    final Database db = await database;
+    await db
+        .insert(
+      'confirmes',
+      confirmes.toJson(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    )
+        .whenComplete(() {
+      print("confirmes download");
+    });
+  }
+  void insertTemoignage(ModelTemoignages temoignages) async {
+    final Database db = await database;
+    await db
+        .insert(
+      'temoignages',
+      temoignages.toJson(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    )
+        .whenComplete(() {
+      print("temoignages download");
     });
   }
 

@@ -1,3 +1,3 @@
 class Apilink{
-  static const String url='http://127.0.0.1:8000/api/';
+  static const String url='http://192.168.43.208:8000/api/';
 }

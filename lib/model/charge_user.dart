@@ -1,33 +1,65 @@
-class Charge_user {
-  int id;
-  int charge_id;
-  int user_id;
-  int pays_id;
-  int assemblee_id;
-  int principal;
-  int position_chantre;
+// To parse this JSON data, do
+//
+//     final modelUsers = modelUsersFromJson(jsonString);
 
-  Charge_user(this.id, this.charge_id, this.user_id, this.pays_id,
-      this.assemblee_id, this.principal, this.position_chantre);
+import 'dart:convert';
 
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'charge_id': charge_id,
-      'user_id': user_id,
-      'pays_id': pays_id,
-      'assemblee_id': assemblee_id,
-      'principal': principal,
-      'position_chantre': position_chantre
+ModelUsers modelUsersFromJson(String str) => ModelUsers.fromJson(json.decode(str));
+
+String modelUsersToJson(ModelUsers data) => json.encode(data.toJson());
+
+class ModelUsers {
+    ModelUsers({
+      required  this.id,
+      required  this.firstName,
+      required  this.lastName,
+      required  this.telephone,
+      required  this.email,
+      required  this.avatar,
+      required  this.youtube,
+      required  this.facebook,
+      required  this.createdAt,
+      required  this.updatedAt,
+      required  this.deletedAt,
+    });
+
+    int id;
+    String? firstName;
+    String? lastName;
+    String? telephone;
+    dynamic? email;
+    dynamic? avatar;
+    dynamic? youtube;
+    dynamic? facebook;
+    String createdAt;
+    String updatedAt;
+    dynamic? deletedAt;
+
+    factory ModelUsers.fromJson(Map<String, dynamic> json) => ModelUsers(
+        id: json["id"],
+        firstName: json["first_name"],
+        lastName: json["last_name"],
+        telephone: json["telephone"],
+        email: json["email"],
+        avatar: json["avatar"],
+        youtube: json["youtube"],
+        facebook: json["facebook"],
+        createdAt: json["created_at"],
+        updatedAt: json["updated_at"],
+        deletedAt: json["deleted_at"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "first_name": firstName,
+        "last_name": lastName,
+        "telephone": telephone,
+        "email": email,
+        "avatar": avatar,
+        "youtube": youtube,
+        "facebook": facebook,
+        "created_at": createdAt,
+        "updated_at": updatedAt,
+        "deleted_at": deletedAt,
     };
-  }
-
-  factory Charge_user.fromMap(Map<String, dynamic> map) => Charge_user(
-      map['id'],
-      map['charge_id'],
-      map['user_id'],
-      map['pays_id'],
-      map['assemblee_id'],
-      map['principal'],
-      map['position_chantre']);
 }

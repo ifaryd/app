@@ -4,28 +4,8 @@
 
 import 'dart:convert';
 
-Modelverset modelversetFromJson(String str) => Modelverset.fromJson(json.decode(str));
-
-String modelversetToJson(Modelverset data) => json.encode(data.toJson());
-
-class Modelverset {
-    Modelverset({
-       required this.versets,
-    });
-
-    List<Verset> versets;
-
-    factory Modelverset.fromJson(Map<String, dynamic> json) => Modelverset(
-        versets: List<Verset>.from(json["versets"].map((x) => Verset.fromJson(x))),
-    );
-
-    Map<String, dynamic> toJson() => {
-        "versets": List<dynamic>.from(versets.map((x) => x.toJson())),
-    };
-}
-
-class Verset {
-    Verset({
+class ModelVerset {
+    ModelVerset({
        required this.id,
        required this.numero,
        required this.contenu,
@@ -41,18 +21,18 @@ class Verset {
     String contenu;
     dynamic info;
     int predicationId;
-    DateTime createdAt;
-    DateTime updatedAt;
+    String createdAt;
+    String updatedAt;
     dynamic deletedAt;
 
-    factory Verset.fromJson(Map<String, dynamic> json) => Verset(
+    factory ModelVerset.fromJson(Map<String, dynamic> json) => ModelVerset(
         id: json["id"],
         numero: json["numero"],
         contenu: json["contenu"],
         info: json["info"],
         predicationId: json["predication_id"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
+        createdAt:json["created_at"],
+        updatedAt: json["updated_at"],
         deletedAt: json["deleted_at"],
     );
 
@@ -62,8 +42,8 @@ class Verset {
         "contenu": contenu,
         "info": info,
         "predication_id": predicationId,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
+        "created_at": createdAt,
+        "updated_at": updatedAt,
         "deleted_at": deletedAt,
     };
 }

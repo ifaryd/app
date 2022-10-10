@@ -29,8 +29,6 @@ class Langues extends StatefulWidget {
 class _LanguesState extends State<Langues> {
   List<LangueModel> langList = [];
 
-  Future downloadDb() async {}
-
   Future<List<LangueModel>> getLangues() async {
     final response = await http.get(Uri.parse('${Apilink.url}langues'));
     if (response.statusCode == 200) {
@@ -54,37 +52,7 @@ class _LanguesState extends State<Langues> {
     }
   }
 
-  Future downloadpred() async {
-    final response =
-        await http.get(Uri.parse('${Apilink.url}predications?langue=1'));
-    if (response.statusCode == 200) {
-      var data = jsonDecode(response.body);
-      var datax = data['data'];
-      for (var u in datax) {
-        PkpDatabase.instance.insertPred(
-          ModelPredications(
-              id: u['id'],
-              titre: u['titre'],
-              sousTitre: u['sousTitre'],
-              numero: u['numero'],
-              lienAudio: u['lienAudio'],
-              nomAudio: u['nomAudio'],
-              lienVideo: u['lienVideo'],
-              duree: u['duree'],
-              chapitre: u['chapitre'],
-              couverture: u['couverture'],
-              sermonSimilaire: u['sermonSimilaire'],
-              langueId: u['langueId'],
-              createdAt: u['createdAt'],
-              updatedAt: u['updatedAt'],
-              deletedAt: u['deletedAt']),
-        );
-      }
-      return "Succes";
-    } else {
-      return "Error";
-    }
-  }
+  
 
   Timer? _timer;
   late double _progress;
@@ -99,7 +67,7 @@ class _LanguesState extends State<Langues> {
         _timer?.cancel();
       }
     });
-    // EasyLoading.showSuccess('Use in initState');
+    saveSqflite.getPreds();
   }
 
   @override
@@ -244,10 +212,21 @@ class _LanguesState extends State<Langues> {
                                                                           .getCharge()
                                                                           .whenComplete(
                                                                               () {
-                                                                        EasyLoading.showSuccess(
+                                                                       
+                                                                          saveSqflite.getChargesUsers().whenComplete((){
+                                                                            saveSqflite.getTemoignages().whenComplete((){
+                                                                              saveSqflite.getCantique().whenComplete((){
+                                                                                saveSqflite.getPreds().whenComplete((){
+                                                                                   saveSqflite.getVersets().whenComplete((){
+                                                                                     EasyLoading.showSuccess(
                                                                             'Great Success!');
                                                                         EasyLoading
                                                                             .dismiss();
+                                                                                   });
+                                                                                });
+                                                                              });
+                                                                            });
+                                                                          });
                                                                       });
                                                                     });
                                                                   });
