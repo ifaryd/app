@@ -14,7 +14,6 @@ import 'package:pkp_android_app/Screen/drawpage.dart';
 import 'package:http/http.dart' as http;
 import 'package:pkp_android_app/model/predications.dart';
 import 'package:sqflite/sqflite.dart';
-import '../../../Dbmanage/dbmanage.dart';
 import '../../../const.dart';
 import '../../../lienApi.dart';
 import '../../../model/langues.dart';
@@ -153,9 +152,9 @@ class _LanguesState extends State<Langues> {
                                                 builder: ((context) {
                                                   return CupertinoAlertDialog(
                                                     title:
-                                                        Text("Téléchargement"),
+                                                        Text("Download"),
                                                     content: Text(
-                                                        "Voulez télécharger la langue ?"),
+                                                        "Do you want to download the book in ${langList[index].libelle}?",style:TextStyle(fontSize:16.5)),
                                                     actions: [
                                                       TextButton(
                                                           onPressed: () {
@@ -194,32 +193,38 @@ class _LanguesState extends State<Langues> {
                                                                 .getpays()
                                                                 .whenComplete(
                                                                     () {
+                                                                      debugPrint('Telechargement ...');
                                                               saveSqflite
                                                                   .getvilles()
                                                                   .whenComplete(
                                                                       () {
+                                                                      
                                                                 saveSqflite
                                                                     .getAssemblees()
                                                                     .whenComplete(
                                                                         () {
+                                                                          
                                                                   saveSqflite
                                                                       .getTypes()
                                                                       .whenComplete(
                                                                           () {
+                                                                        
                                                                     saveSqflite
                                                                         .getVideo()
                                                                         .whenComplete(
                                                                             () {
+                                                                              
                                                                       saveSqflite
                                                                           .getCharge()
                                                                           .whenComplete(
                                                                               () {
-                                                                       
+                                                                               
                                                                           saveSqflite.getChargesUsers().whenComplete((){
                                                                             saveSqflite.getTemoignages().whenComplete((){
                                                                               saveSqflite.getCantique().whenComplete((){
-                                                                                saveSqflite.getPreds().whenComplete((){
+                                                                                saveSqflite.getPreds(langId:langList[index].id).whenComplete((){
                                                                                    saveSqflite.getVersets().whenComplete((){
+                                                                                     debugPrint('Telechargement terminé');
                                                                                      EasyLoading.showSuccess(
                                                                             'Great Success!');
                                                                         EasyLoading

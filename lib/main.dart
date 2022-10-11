@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:pkp_android_app/Dbmanage/dbmanage.dart';
 import 'package:pkp_android_app/Dbmanage/localDb.dart';
 import 'package:pkp_android_app/const.dart';
 
+import 'Dbmanage/sqfliteDb.dart';
 import 'Screen/Choix_Lang.dart';
 
 void main() async {

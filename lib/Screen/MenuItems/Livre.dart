@@ -2,13 +2,12 @@
 
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:pkp_android_app/Dbmanage/dbmanage.dart';
 import 'package:pkp_android_app/Screen/predPage.dart';
 import 'package:pkp_android_app/model/predications.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
-import 'package:sqflite/sqflite.dart';
+
+import '../../Dbmanage/sqfliteDb.dart';
 
 class LivrePkp extends StatefulWidget {
   final String title;
@@ -37,6 +36,7 @@ class _LivrePkpState extends State<LivrePkp> {
   }
   @override
   void initState() {
+    // ignore: todo
     // TODO: implement initState
     super.initState();
     PkpDatabase.instance.initDB().whenComplete((){

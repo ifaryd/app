@@ -15,6 +15,7 @@ class ModelPredications {
       required this.createdAt,
       required this.updatedAt,
       required this.deletedAt,
+      required this.lien_audio_cloud,
     });
 
     int id;
@@ -32,6 +33,7 @@ class ModelPredications {
     String createdAt;
     String updatedAt;
     dynamic? deletedAt;
+    String? lien_audio_cloud;
 
     factory ModelPredications.fromJson(Map<String, dynamic> json) => ModelPredications(
         id: json["id"],
@@ -49,6 +51,7 @@ class ModelPredications {
         createdAt: json["created_at"],
         updatedAt: json["updated_at"],
         deletedAt: json["deleted_at"],
+        lien_audio_cloud: json["lien_audio_cloud"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -67,5 +70,6 @@ class ModelPredications {
         "created_at": createdAt,
         "updated_at": updatedAt,
         "deleted_at": deletedAt,
+        "lien_audio_cloud": lien_audio_cloud,
     };
 }

@@ -3,8 +3,9 @@
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pkp_android_app/Dbmanage/dbmanage.dart';
 import 'package:pkp_android_app/model/versets.dart';
+
+import '../Dbmanage/sqfliteDb.dart';
 
 class PredPages extends StatefulWidget {
   const PredPages({Key? key, required this.title,required this.idx}) : super(key: key);
@@ -183,7 +184,6 @@ class Myserachdelegate extends SearchDelegate{
 
   @override
   Widget buildResults(BuildContext context) {
-    // TODO: implement buildResults
         return Container();
 
   }

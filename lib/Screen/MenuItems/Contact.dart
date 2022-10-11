@@ -2,7 +2,6 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pkp_android_app/Dbmanage/dbmanage.dart';
 import 'package:pkp_android_app/model/pays.dart';
 
 import '../../const.dart';

@@ -1,6 +1,8 @@
+// ignore_for_file: file_names, depend_on_referenced_packages, camel_case_types
+
 import 'dart:convert';
 
-import 'package:pkp_android_app/Dbmanage/dbmanage.dart';
+import 'package:pkp_android_app/Dbmanage/sqfliteDb.dart';
 import 'package:pkp_android_app/lienApi.dart';
 import 'package:pkp_android_app/model/assemblees.dart';
 import 'package:pkp_android_app/model/cantiques.dart';
@@ -86,10 +88,11 @@ class saveSqflite {
     }
   }
 
-  static Future getPreds() async {
-    final response =
-        await http.get(Uri.parse('${Apilink.url}predications?langue=1'));
-    if (response.statusCode == 200) {
+  static Future getPreds({required int? langId}) async {
+   if(langId!=null){
+      final response =
+        await http.get(Uri.parse('${Apilink.url}predications?langue=$langId'));
+        if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
       var datax = data['data'];
       for (var u in datax) {
@@ -109,13 +112,19 @@ class saveSqflite {
               langueId: u['langue_id'],
               createdAt: u['created_at'],
               updatedAt: u['updated_at'],
-              deletedAt: u['deleted_at']),
+              deletedAt: u['deleted_at'],
+              lien_audio_cloud:u['lien_audio_cloud']
+              ),
+             
         );
       }
       return "Succes";
     } else {
       return "Error";
     }
+   }else{
+     Future.error('data null');
+   }
   }
   static Future getVersets() async {
     final response =
