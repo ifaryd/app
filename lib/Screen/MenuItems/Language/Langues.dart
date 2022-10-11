@@ -67,7 +67,6 @@ class _LanguesState extends State<Langues> {
         _timer?.cancel();
       }
     });
-    saveSqflite.getPreds();
   }
 
   @override
@@ -86,7 +85,10 @@ class _LanguesState extends State<Langues> {
                     style: TextStyle(color: AppColor.text, fontSize: 13)),
                 GestureDetector(
                     onTap: () {
-                      setState(() {});
+                    //  setState(() {});
+                      Navigator.push(context, MaterialPageRoute(builder:((context) {
+                        return Drawpage();
+                      })));
                     },
                     child: Text(
                       "Cliquer pour rechercher une mis à jour",

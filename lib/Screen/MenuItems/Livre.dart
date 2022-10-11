@@ -1,4 +1,4 @@
-/* // ignore_for_file: file_names
+// ignore_for_file: file_names
 
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,6 +8,7 @@ import 'package:pkp_android_app/Dbmanage/dbmanage.dart';
 import 'package:pkp_android_app/Screen/predPage.dart';
 import 'package:pkp_android_app/model/predications.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+import 'package:sqflite/sqflite.dart';
 
 class LivrePkp extends StatefulWidget {
   final String title;
@@ -17,21 +18,7 @@ class LivrePkp extends StatefulWidget {
 }
 
 class _LivrePkpState extends State<LivrePkp> {
-  int predindex = 0;
-  tap(int idx) {
-    setState(() {
-      predindex = idx;
-    });
-  }
-  List<classPredications>? predList;
-  bool load=true;
-  /* getallPred()async{
-    predList= await Dbmanage().getPred();
-    print('list num :${predList!.length}');
-   setState(() {
-      load=false;
-   }); */
-  }
+
   final ItemScrollController itemScrollController = ItemScrollController();
   final itemkey=GlobalKey();
   Future scrollDown(int index)async{
@@ -40,12 +27,26 @@ class _LivrePkpState extends State<LivrePkp> {
      );
   }
   final Duration initialDelay = Duration(milliseconds:50);
+  Future<List<ModelPredications>>? predications;
+  bool load=false;
+  int down=0;
+  btndown(){
+    setState(() {
+                 scrollDown(down);
+                });
+  }
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-      
-         getallPred();
+    PkpDatabase.instance.initDB().whenComplete((){
+      setState(() {
+        predications=getpreds();
+      });
+    });
+  }
+  Future<List<ModelPredications>> getpreds() async{
+   return await PkpDatabase.instance.listPred();
   }
   @override
   Widget build(BuildContext context) {
@@ -70,30 +71,42 @@ class _LivrePkpState extends State<LivrePkp> {
               }, icon: Icon(Icons.keyboard_double_arrow_up_outlined)),
               IconButton(onPressed:(){
                 setState(() {
-                  scrollDown(predList!.length);
-                });
+                   scrollDown(152);
+            });
               }, icon: Icon(Icons.keyboard_double_arrow_down_sharp))
             ],
       ),
       body:(load)? Center(child:CircularProgressIndicator.adaptive(),): Padding(
         padding: const EdgeInsets.only(left:1.0),
-        child: ScrollablePositionedList.separated(
+        child: FutureBuilder(
+          future: predications,
+          builder:((BuildContext context, AsyncSnapshot<List<ModelPredications>> snapshot){
+            if(snapshot.connectionState==ConnectionState.waiting){
+              return CircularProgressIndicator(color:Colors.blue,);
+            }else{
+              if(snapshot.hasError){
+              return  Text("Error sqflite");
+              }else{
+                final items=snapshot.data ?? <ModelPredications>[];
+                return (items.isNotEmpty)? 
+                ScrollablePositionedList.separated(
           itemScrollController: itemScrollController,
           separatorBuilder: (BuildContext context, int index) => const Divider(
           ),
-          itemCount: (predList!.length),
+          itemCount: (items.length),
           shrinkWrap: true,
           itemBuilder: ((context, index) {
+            
             return InkWell(
               onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: ((context) => PredPages(title:'Kacou ${predList![index].id} : ${predList![index].titre}',))));
+              Navigator.push(context, MaterialPageRoute(builder: ((context) => PredPages(title:'${items[index].chapitre} : ${items[index].titre}',idx:items[index].numero,))));
               },
               child: DelayedDisplay(
                 delay:initialDelay ,
                 child: ListTile(
                   style:ListTileStyle.list,
                   title:Text(
-                    "Kacou ${predList![index].id} : ${predList![index].titre}",style:TextStyle(fontSize:16,fontWeight:FontWeight.bold),textAlign:TextAlign.center,
+                    "${items[index].chapitre} : ${items[index].titre}",style:TextStyle(fontSize:16,fontWeight:FontWeight.bold),textAlign:TextAlign.center,
                    
                   ),
                   trailing: Icon(
@@ -101,7 +114,7 @@ class _LivrePkpState extends State<LivrePkp> {
                     size:20,
                   ),
                   subtitle: Text(
-                    predList![index].sous_titre.toString(),
+                    items[index].sousTitre.toString(),
                     style: TextStyle(
                      fontStyle: FontStyle.italic,fontSize:13),
                   ),
@@ -109,8 +122,12 @@ class _LivrePkpState extends State<LivrePkp> {
               ),
             );
           }),
-        ),
+        ): Text("Aucun versets disponible pour cette prédications");
+              }
+            }
+          }),
+        )
       ),
     );
   }
-} */
+}

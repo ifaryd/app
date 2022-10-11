@@ -34,7 +34,7 @@ class _DrawpageState extends State<Drawpage> {
             pageAnimationType: RightToLeftTransition()));
       } else if (index == 1) {
         Navigator.of(context).push(PageAnimationTransition(
-            page: Biographie(
+            page: LivrePkp(
               title: 'Livre',
             ),
             pageAnimationType: RightToLeftTransition()));

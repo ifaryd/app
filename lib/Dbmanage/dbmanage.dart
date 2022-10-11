@@ -205,6 +205,7 @@ class PkpDatabase {
       print("Prediactions ajouté");
     });
   }
+
   void insertVerset(ModelVerset verset) async {
     final Database db = await database;
     await db
@@ -226,6 +227,7 @@ class PkpDatabase {
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
+
   void insertCantiques(ModelCantiques cantiques) async {
     final Database db = await database;
     await db.insert(
@@ -280,6 +282,7 @@ class PkpDatabase {
       print("charges download");
     });
   }
+
   void insertUsers(ModelUsers users) async {
     final Database db = await database;
     await db
@@ -292,6 +295,7 @@ class PkpDatabase {
       print("users download");
     });
   }
+
   void insertConfirmes(ModelConfirmes confirmes) async {
     final Database db = await database;
     await db
@@ -304,6 +308,7 @@ class PkpDatabase {
       print("confirmes download");
     });
   }
+
   void insertTemoignage(ModelTemoignages temoignages) async {
     final Database db = await database;
     await db
@@ -347,7 +352,28 @@ class PkpDatabase {
     db.delete("assemblees", where: "id = ?", whereArgs: [id]);
   }
 
-//---LISTE
+//---ReAD
+
+  Future<List<ModelPredications>> listPred() async {
+    final Database db = await database;
+    final List<Map<String, dynamic>> maps = await db.query('predications');
+    List<ModelPredications> listpreds = List.generate(maps.length, (i) {
+      return ModelPredications.fromJson(maps[i]);
+    });
+    return listpreds;
+  }
+
+  Future<List<ModelVerset>> listVerset({required int idx}) async {
+    final Database db = await database;
+    final List<Map<String, dynamic>> maps = await db.query('versets',
+        where: 'predication_id = ?',
+        whereArgs: [idx]);
+    List<ModelVerset> listpreds = List.generate(maps.length, (i) {
+      return ModelVerset.fromJson(maps[i]);
+    });
+    return listpreds;
+  }
+
   Future<List<Paysmodel>> listepays() async {
     final Database db = await database;
     final List<Map<String, dynamic>> maps = await db.query('pays');
