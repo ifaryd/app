@@ -223,7 +223,7 @@ class _LanguesState extends State<Langues> {
                                                                             saveSqflite.getTemoignages().whenComplete((){
                                                                               saveSqflite.getCantique().whenComplete((){
                                                                                 saveSqflite.getPreds(langId:langList[index].id).whenComplete((){
-                                                                                   saveSqflite.getVersets().whenComplete((){
+                                                                                   saveSqflite.getVersets(langId:langList[index].id).whenComplete((){
                                                                                      debugPrint('Telechargement terminé');
                                                                                      EasyLoading.showSuccess(
                                                                             'Great Success!');

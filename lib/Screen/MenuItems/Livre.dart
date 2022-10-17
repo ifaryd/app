@@ -99,7 +99,7 @@ class _LivrePkpState extends State<LivrePkp> {
             
             return InkWell(
               onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: ((context) => PredPages(title:'${items[index].chapitre} : ${items[index].titre}',idx:items[index].numero,))));
+              Navigator.push(context, MaterialPageRoute(builder: ((context) => PredPages(title:'${items[index].chapitre} : ${items[index].titre}',idx:items[index].id,))));
               },
               child: DelayedDisplay(
                 delay:initialDelay ,

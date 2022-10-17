@@ -28,14 +28,14 @@ class ModelCantiques {
     String titre;
     String lienAudio;
     String nomFichier;
-    dynamic? contenu;
+    dynamic contenu;
     int duree;
-    dynamic? langueId;
+    dynamic langueId;
     int userId;
     DateTime createdAt;
     DateTime updatedAt;
-    dynamic? deletedAt;
-    dynamic? langue;
+    dynamic deletedAt;
+    dynamic langue;
 
     factory ModelCantiques.fromJson(Map<String, dynamic> json) => ModelCantiques(
         id: json["id"],

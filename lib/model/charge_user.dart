@@ -27,13 +27,13 @@ class ModelUsers {
     String? firstName;
     String? lastName;
     String? telephone;
-    dynamic? email;
-    dynamic? avatar;
-    dynamic? youtube;
-    dynamic? facebook;
+    dynamic email;
+    dynamic avatar;
+    dynamic youtube;
+    dynamic facebook;
     String createdAt;
     String updatedAt;
-    dynamic? deletedAt;
+    dynamic deletedAt;
 
     factory ModelUsers.fromJson(Map<String, dynamic> json) => ModelUsers(
         id: json["id"],

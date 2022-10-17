@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:pkp_android_app/Dbmanage/sqfliteDb.dart';
 import 'package:pkp_android_app/lienApi.dart';
 import 'package:pkp_android_app/model/assemblees.dart';
@@ -20,7 +21,7 @@ import '../model/pays.dart';
 import 'package:http/http.dart' as http;
 
 import '../model/predications.dart';
-
+  
 class saveSqflite {
   static Future getpays() async {
     final response = await http.get(Uri.parse('${Apilink.url}pays'));
@@ -40,7 +41,7 @@ class saveSqflite {
             ));
       }
     } else {
-      print(response.statusCode);
+      debugPrint('Getpays has error');
     }
   }
 
@@ -61,7 +62,7 @@ class saveSqflite {
             deletedAt: u['deleted_at']));
       }
     } else {
-      print(response.statusCode);
+      debugPrint('Getpays has error');
     }
   }
 
@@ -84,7 +85,7 @@ class saveSqflite {
             deletedAt: u['deleted_at']));
       }
     } else {
-      print(response.statusCode);
+    debugPrint('Getpays has error');
     }
   }
 
@@ -126,9 +127,10 @@ class saveSqflite {
      Future.error('data null');
    }
   }
-  static Future getVersets() async {
+  static Future getVersets({required int? langId}) async {
+    print('langue verset $langId');
     final response =
-        await http.get(Uri.parse('${Apilink.url}predications?langue=1'));
+        await http.get(Uri.parse('${Apilink.url}predications?langue=$langId'));
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
       var datax = data['data'];
@@ -172,7 +174,7 @@ class saveSqflite {
             deletedAt: u['deleted_at']));
       }
     } else {
-      print(response.statusCode);
+    debugPrint('getTypes has error');
     }
   }
 
@@ -196,7 +198,7 @@ class saveSqflite {
             deletedAt: u['deleted_at']));
       }
     } else {
-      print(response.statusCode);
+    debugPrint('getVideo has error');
     }
   }
 
@@ -216,7 +218,7 @@ class saveSqflite {
             deletedAt: u['deleted-at']));
       }
     } else {
-      print(response.statusCode);
+    debugPrint('getCharge has error');
     }
   }
   static Future getChargesUsers() async {
@@ -231,7 +233,7 @@ class saveSqflite {
             );
       }
     } else {
-      print(response.statusCode);
+    debugPrint('getChargesUsers has error');
     }
   }
   static Future getConfirmes() async {
@@ -245,7 +247,7 @@ class saveSqflite {
             );
       }
     } else {
-      print(response.statusCode);
+    debugPrint('getConfirmes has error');
     }
   }
   static Future getTemoignages() async {
@@ -259,7 +261,7 @@ class saveSqflite {
             );
       }
     } else {
-      print(response.statusCode);
+    debugPrint('getTemoignages has error');
     }
   }
   static Future getLangues() async {
@@ -273,7 +275,7 @@ class saveSqflite {
             );
       }
     } else {
-      print(response.statusCode);
+    debugPrint('getLangues has error');
     }
   }
   static Future getCantique() async {
@@ -283,11 +285,11 @@ class saveSqflite {
       var datax = data['data'];
       for (var u in datax) {
         PkpDatabase.instance.insertCantiques(
-          ModelCantiques.fromJson(datax),
+          ModelCantiques(id: u['id'], titre: u['titre'], lienAudio: u['lien_auio'], nomFichier: u['nom_fichier'], contenu: u['contenu'], duree: u['duree'], langueId: u['langue_id'], userId: u['user_id'], createdAt: u['created_at'], updatedAt: u['updated_at'], deletedAt: u['deleted_at'], langue: u['langue'])
             );
       }
     } else {
-      print(response.statusCode);
+    debugPrint('getCantique has error');
     }
   }
 

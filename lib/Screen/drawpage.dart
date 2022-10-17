@@ -140,10 +140,44 @@ class _DrawpageState extends State<Drawpage> {
         //  backgroundColor: Color.fromARGB(234, 248, 248, 251),
         title: Text(
           "Livre du prophète Kacou Philippe",
-          style: TextStyle(fontSize: 17),
+          style: TextStyle(fontSize: 15),
         ),
-        centerTitle: true,
+        //centerTitle: true,
         elevation: 1,
+        actions: [
+          (themeLight)
+                        ? TextButton.icon(
+                            onPressed: () {
+                              setState(() {
+                                themeLight = !themeLight;
+                                (themeLight)
+                                    ? AdaptiveTheme.of(context).setLight()
+                                    : AdaptiveTheme.of(context).setDark();
+                              });
+                            },
+                            icon: Icon(
+                              CupertinoIcons.sun_max_fill,
+                              size: 27,
+                            ),
+                            label: Text(
+                              '',
+                              style: TextStyle(fontSize: 15),
+                            ))
+                        : TextButton.icon(
+                            onPressed: () {
+                              setState(() {
+                                themeLight = !themeLight;
+                                (themeLight)
+                                    ? AdaptiveTheme.of(context).setLight()
+                                    : AdaptiveTheme.of(context).setDark();
+                              });
+                            },
+                            icon: Icon(CupertinoIcons.moon_fill, size: 27),
+                            label: Text(
+                              '',
+                              style: TextStyle(fontSize: 15),
+                            )),
+        ],
       ),
       body: Column(
         children: [
@@ -152,7 +186,7 @@ class _DrawpageState extends State<Drawpage> {
             child: ListView(
               padding: EdgeInsets.zero,
               children: [
-                SizedBox(
+               /*  SizedBox(
                   height: 50,
                   child: ListTile(
                     onTap: () {},
@@ -193,8 +227,8 @@ class _DrawpageState extends State<Drawpage> {
                       'Theme',
                     ),
                   ),
-                ),
-                Divider(),
+                ), */
+              //  Divider(),
                 AppBarTile(
                   index: 0,
                   onTap: updateState(1),
