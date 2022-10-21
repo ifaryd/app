@@ -10,6 +10,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:page_animation_transition/animations/right_to_left_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
 import 'package:pkp_android_app/Dbmanage/localDb.dart';
+import 'package:pkp_android_app/Dbmanage/sqfliteDb.dart';
 import 'package:pkp_android_app/Screen/drawpage.dart';
 import 'package:http/http.dart' as http;
 import 'package:pkp_android_app/model/predications.dart';
@@ -28,36 +29,58 @@ class Langues extends StatefulWidget {
 class _LanguesState extends State<Langues> {
   List<LangueModel> langList = [];
 
-  Future<List<LangueModel>> getLangues() async {
+  /* Future<List<LangueModel>> getLangues() async {
     final response = await http.get(Uri.parse('${Apilink.url}langues'));
     if (response.statusCode == 200) {
-      langList.removeRange(0, langList.length);
+      //  langList.removeRange(0, langList.length);
       var data = jsonDecode(response.body);
       var datax = data['data'];
       //print(datax);
       for (var u in datax) {
-        LangueModel langues = LangueModel(
+        /* LangueModel langues = LangueModel(
             id: u['id'],
             libelle: u['libelle'],
             initial: u['initial'],
             createdAt: u['createdAt'],
             updatedAt: u['updatedAt'],
-            deletedAt: u['deletedAt']);
-        langList.add(langues);
+            deletedAt: u['deletedAt'],
+            isdown: u['isdown']);
+            
+        langList.add(langues); */
+
+        /*    PkpDatabase.instance.insertLangue(
+          LangueModel.fromJson(u),
+        ); */
+
       }
       return langList;
     } else {
       return langList;
     }
-  }
-
-  
+  } */
 
   Timer? _timer;
   late double _progress;
 
+  bool load = true;
+  void UpdateUi(){
+      PkpDatabase.instance.initDB().whenComplete(() {
+      setState(() {
+        langues = getlng();
+        load = false;
+      });
+    });
+  }
+  Future<void> actualiser()async{
+    setState(() {
+      langues=getlng();
+    });
+  }
+  Future<List<LangueModel>>? langues;
   @override
   void initState() {
+    UpdateUi();
+    //saveSqflite.getLangues();
     // TODO: implement initState
     super.initState();
     EasyLoading.addStatusCallback((status) {
@@ -66,6 +89,10 @@ class _LanguesState extends State<Langues> {
         _timer?.cancel();
       }
     });
+  }
+
+  Future<List<LangueModel>> getlng() async {
+    return await PkpDatabase.instance.listlangue();
   }
 
   @override
@@ -84,8 +111,9 @@ class _LanguesState extends State<Langues> {
                     style: TextStyle(color: AppColor.text, fontSize: 13)),
                 GestureDetector(
                     onTap: () {
-                    //  setState(() {});
-                      Navigator.push(context, MaterialPageRoute(builder:((context) {
+                      //  setState(() {});
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: ((context) {
                         return Drawpage();
                       })));
                     },
@@ -99,8 +127,8 @@ class _LanguesState extends State<Langues> {
         Column(
           children: [
             FutureBuilder(
-              future: getLangues(),
-              builder: ((context, snapshot) {
+              future: langues,
+              builder: ((context, AsyncSnapshot<List<LangueModel>> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
                       child: CircularProgressIndicator(color: Colors.blue));
@@ -109,7 +137,7 @@ class _LanguesState extends State<Langues> {
                     return ListView.separated(
                         shrinkWrap: true,
                         padding: EdgeInsets.zero,
-                        itemCount: langList.length,
+                        itemCount: snapshot.data!.length,
                         separatorBuilder: (BuildContext context, int index) =>
                             const Divider(),
                         itemBuilder: (BuildContext context, int index) {
@@ -117,11 +145,18 @@ class _LanguesState extends State<Langues> {
                             padding: const EdgeInsets.only(left: 8.0),
                             child: GestureDetector(
                               onTap: () {
-                                Navigator.of(context).push(
+                                /*   Navigator.of(context).push(
                                     PageAnimationTransition(
                                         page: Drawpage(),
                                         pageAnimationType:
-                                            RightToLeftTransition()));
+                                            RightToLeftTransition())); */
+                                setState(() {
+                                  load=true;
+                                  PkpDatabase.instance
+                                      .toggleTodoItem(snapshot.data![index]);
+                                  actualiser();
+                                });
+                                 UpdateUi();
                               },
                               child: Row(
                                 mainAxisAlignment:
@@ -129,10 +164,13 @@ class _LanguesState extends State<Langues> {
                                 children: [
                                   Row(
                                     children: [
-                                      Icon(Icons.check),
+                                      (snapshot.data![index].isdown.toString() == "1")
+                                          ? Icon(Icons.check)
+                                          : Text(""),
                                       SizedBox(width: 5),
                                       Text(
-                                        langList[index].libelle.toString(),
+                                        snapshot.data![index].libelle
+                                            .toString(),
                                         style: TextStyle(fontSize: 17),
                                       ),
                                     ],
@@ -151,10 +189,11 @@ class _LanguesState extends State<Langues> {
                                                 context: context,
                                                 builder: ((context) {
                                                   return CupertinoAlertDialog(
-                                                    title:
-                                                        Text("Download"),
+                                                    title: Text("Download"),
                                                     content: Text(
-                                                        "Do you want to download the book in ${langList[index].libelle}?",style:TextStyle(fontSize:16.5)),
+                                                        "Do you want to download the book in ${langList[index].libelle}?",
+                                                        style: TextStyle(
+                                                            fontSize: 16.5)),
                                                     actions: [
                                                       TextButton(
                                                           onPressed: () {
@@ -193,47 +232,45 @@ class _LanguesState extends State<Langues> {
                                                                 .getpays()
                                                                 .whenComplete(
                                                                     () {
-                                                                      debugPrint('Telechargement ...');
+                                                              debugPrint(
+                                                                  'Telechargement ...');
                                                               saveSqflite
                                                                   .getvilles()
                                                                   .whenComplete(
                                                                       () {
-                                                                      
                                                                 saveSqflite
                                                                     .getAssemblees()
                                                                     .whenComplete(
                                                                         () {
-                                                                          
                                                                   saveSqflite
                                                                       .getTypes()
                                                                       .whenComplete(
                                                                           () {
-                                                                        
                                                                     saveSqflite
                                                                         .getVideo()
                                                                         .whenComplete(
                                                                             () {
-                                                                              
                                                                       saveSqflite
                                                                           .getCharge()
                                                                           .whenComplete(
                                                                               () {
-                                                                               
-                                                                          saveSqflite.getChargesUsers().whenComplete((){
-                                                                            saveSqflite.getTemoignages().whenComplete((){
-                                                                              saveSqflite.getCantique().whenComplete((){
-                                                                                saveSqflite.getPreds(langId:langList[index].id).whenComplete((){
-                                                                                   saveSqflite.getVersets().whenComplete((){
-                                                                                     debugPrint('Telechargement terminé');
-                                                                                     EasyLoading.showSuccess(
-                                                                            'Great Success!');
-                                                                        EasyLoading
-                                                                            .dismiss();
-                                                                                   });
+                                                                        saveSqflite
+                                                                            .getChargesUsers()
+                                                                            .whenComplete(() {
+                                                                          saveSqflite
+                                                                              .getTemoignages()
+                                                                              .whenComplete(() {
+                                                                            saveSqflite.getCantique().whenComplete(() {
+                                                                              saveSqflite.getPreds(langId: langList[index].id).whenComplete(() {
+                                                                                saveSqflite.getVersets().whenComplete(() {
+                                                                                  debugPrint('Telechargement terminé');
+                                                                                  EasyLoading.showSuccess('Great Success!');
+                                                                                  EasyLoading.dismiss();
                                                                                 });
                                                                               });
                                                                             });
                                                                           });
+                                                                        });
                                                                       });
                                                                     });
                                                                   });

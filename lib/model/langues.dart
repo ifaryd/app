@@ -4,7 +4,8 @@ class LangueModel {
   String? initial;
   String? createdAt;
   String? updatedAt;
-  String?   deletedAt;
+  String? deletedAt;
+  int? isdown ; 
 
   LangueModel(
       {
@@ -13,7 +14,9 @@ class LangueModel {
       required this.initial,
       required this.createdAt,
       required this.updatedAt,
-      required this.deletedAt});
+      required this.deletedAt,
+      required this.isdown,
+       });
 
   LangueModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -22,6 +25,7 @@ class LangueModel {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     deletedAt = json['deleted_at'];
+    isdown = json['isdown'];
   }
 
   Map<String, dynamic> toJson() {
@@ -32,6 +36,7 @@ class LangueModel {
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
     data['deleted_at'] = this.deletedAt;
+    data['isdown'] = this.isdown;
     return data;
   }
 }

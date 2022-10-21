@@ -44,7 +44,7 @@ class PkpDatabase {
       await db.execute(
           'CREATE TABLE "assemblees" ("id" integer not null primary key autoincrement, "nom" varchar, "ville_id" integer not null, "localisation" text, "addresse" text, "photo" text, "created_at" datetime, "updated_at" datetime, "deleted_at" datetime, foreign key("ville_id") references "villes"("id") on delete cascade on update cascade)');
       await db.execute(
-          'CREATE TABLE "langues" ("id" integer not null primary key autoincrement, "libelle" varchar not null, "initial" varchar not null, "created_at" datetime, "updated_at" datetime, "deleted_at" datetime)');
+          'CREATE TABLE "langues" ("id" integer not null primary key autoincrement, "libelle" varchar not null, "initial" varchar not null, "created_at" datetime, "updated_at" datetime, "deleted_at" datetime, "isdown" INTEGER)');
 
       await db.execute(
           'CREATE TABLE "predications" ("id" integer not null primary key autoincrement, "titre" varchar not null, "sous_titre" varchar, "numero" integer, "lien_audio" text, "nom_audio" text, "lien_video" text, "duree" integer, "chapitre" varchar, "couverture" text, "sermon_similaire" text, "langue_id" integer, "created_at" datetime, "updated_at" datetime, "deleted_at" datetime, "lien_audio_cloud" TEXT, foreign key("langue_id") references "langues"("id") on delete cascade on update cascade)'
@@ -209,6 +209,19 @@ class PkpDatabase {
   }
 
 //---UPDATE
+
+  Future<void> toggleTodoItem(LangueModel langue) async {
+    final Database db = await database;
+    final int count = await db.rawUpdate(
+      /*sql=*/ '''
+      UPDATE langues
+      SET isdown = ?
+      WHERE id = ?''',
+      /*args=*/ [(langue.isdown == 0)? 1:0, langue.id],
+    );
+    
+    print('Updated ${langue.isdown} -----  ${langue.id} ');
+  }
   void updatePays(Paysmodel pays) async {
     final Database db = await database;
     await db

@@ -269,7 +269,7 @@ class saveSqflite {
       var datax = data['data'];
       for (var u in datax) {
         PkpDatabase.instance.insertLangue(
-          LangueModel(id: u['id'], libelle: u['libelle'], initial: u['initial'], createdAt: u['created_at'], updatedAt: u['updated_at'], deletedAt:u['deleted_at'])
+          LangueModel(id: u['id'], libelle: u['libelle'], initial: u['initial'], createdAt: u['created_at'], updatedAt: u['updated_at'], deletedAt:u['deleted_at'], isdown: 0)
             );
       }
     } else {
