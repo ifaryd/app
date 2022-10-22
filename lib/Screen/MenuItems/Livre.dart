@@ -11,7 +11,8 @@ import '../../Dbmanage/sqfliteDb.dart';
 
 class LivrePkp extends StatefulWidget {
   final String title;
-  const LivrePkp({Key? key, required this.title}) : super(key: key);
+  const LivrePkp({Key? key, required this.title, required this.Idlang}) : super(key: key);
+  final int Idlang;
   @override
   State<LivrePkp> createState() => _LivrePkpState();
 }
@@ -46,7 +47,7 @@ class _LivrePkpState extends State<LivrePkp> {
     });
   }
   Future<List<ModelPredications>> getpreds() async{
-   return await PkpDatabase.instance.listPred();
+   return await PkpDatabase.instance.listPred(Idlang:widget.Idlang);
   }
   @override
   Widget build(BuildContext context) {
@@ -99,7 +100,7 @@ class _LivrePkpState extends State<LivrePkp> {
             
             return InkWell(
               onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: ((context) => PredPages(title:'${items[index].chapitre} : ${items[index].titre}',idx:items[index].numero,))));
+              Navigator.push(context, MaterialPageRoute(builder: ((context) => PredPages(title:'${items[index].chapitre} : ${items[index].titre}',idx:items[index].id,))));
               },
               child: DelayedDisplay(
                 delay:initialDelay ,

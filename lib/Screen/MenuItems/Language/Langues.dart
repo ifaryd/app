@@ -114,7 +114,7 @@ class _LanguesState extends State<Langues> {
                       //  setState(() {});
                       Navigator.push(context,
                           MaterialPageRoute(builder: ((context) {
-                        return Drawpage();
+                        return Drawpage(Idlang:1,);
                       })));
                     },
                     child: Text(
@@ -145,18 +145,18 @@ class _LanguesState extends State<Langues> {
                             padding: const EdgeInsets.only(left: 8.0),
                             child: GestureDetector(
                               onTap: () {
-                                /*   Navigator.of(context).push(
+                                  Navigator.of(context).push(
                                     PageAnimationTransition(
-                                        page: Drawpage(),
+                                        page: Drawpage(Idlang:snapshot.data![index].id!,),
                                         pageAnimationType:
-                                            RightToLeftTransition())); */
-                                setState(() {
+                                            RightToLeftTransition()));
+                                /* setState(() {
                                   load=true;
                                   PkpDatabase.instance
                                       .toggleTodoItem(snapshot.data![index]);
                                   actualiser();
                                 });
-                                 UpdateUi();
+                                 UpdateUi(); */
                               },
                               child: Row(
                                 mainAxisAlignment:
@@ -191,7 +191,7 @@ class _LanguesState extends State<Langues> {
                                                   return CupertinoAlertDialog(
                                                     title: Text("Download"),
                                                     content: Text(
-                                                        "Do you want to download the book in ${langList[index].libelle}?",
+                                                        "Do you want to download the book in ${snapshot.data![index].libelle}?",
                                                         style: TextStyle(
                                                             fontSize: 16.5)),
                                                     actions: [
@@ -260,15 +260,15 @@ class _LanguesState extends State<Langues> {
                                                                           saveSqflite
                                                                               .getTemoignages()
                                                                               .whenComplete(() {
-                                                                            saveSqflite.getCantique().whenComplete(() {
-                                                                              saveSqflite.getPreds(langId: langList[index].id).whenComplete(() {
-                                                                                saveSqflite.getVersets().whenComplete(() {
+                                                                          //  saveSqflite.getCantique().whenComplete(() {
+                                                                              saveSqflite.getPreds(langId:snapshot.data![index].id).whenComplete(() {
+                                                                                saveSqflite.getVersets(indx: snapshot.data![index].id!).whenComplete(() {
                                                                                   debugPrint('Telechargement terminé');
                                                                                   EasyLoading.showSuccess('Great Success!');
                                                                                   EasyLoading.dismiss();
                                                                                 });
-                                                                              });
-                                                                            });
+                                                                            //  });
+                                                                               } );
                                                                           });
                                                                         });
                                                                       });

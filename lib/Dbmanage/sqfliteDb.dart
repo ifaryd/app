@@ -253,9 +253,9 @@ class PkpDatabase {
 
 //---ReAD
 
-  Future<List<ModelPredications>> listPred() async {
+  Future<List<ModelPredications>> listPred({required int Idlang}) async {
     final Database db = await database;
-    final List<Map<String, dynamic>> maps = await db.query('predications');
+    final List<Map<String, dynamic>> maps = await db.query('predications', where: 'langue_id = ?', whereArgs: [Idlang]);
     List<ModelPredications> listpreds = List.generate(maps.length, (i) {
       return ModelPredications.fromJson(maps[i]);
     });
@@ -288,6 +288,14 @@ class PkpDatabase {
       return LangueModel.fromJson(maps[i]);
     });
     return listlangues;
+  }
+  Future<List<ModelTemoignages>> listTemoignage({required int idx}) async {
+    final Database db = await database;
+    final List<Map<String, dynamic>> maps = await db.query('temoignages', where: 'langue_id = ?', whereArgs: [idx]);
+    List<ModelTemoignages> listtemoignage = List.generate(maps.length, (i) {
+      return ModelTemoignages.fromJson(maps[i]);
+    });
+    return listtemoignage;
   }
 
   Future<List<assemblesmodel>> listeAssemblees() async {

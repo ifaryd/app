@@ -126,9 +126,9 @@ class saveSqflite {
      Future.error('data null');
    }
   }
-  static Future getVersets() async {
+  static Future getVersets({required int indx}) async {
     final response =
-        await http.get(Uri.parse('${Apilink.url}predications?langue=1'));
+        await http.get(Uri.parse('${Apilink.url}predications?langue=$indx'));
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
       var datax = data['data'];
@@ -277,7 +277,8 @@ class saveSqflite {
     }
   }
   static Future getCantique() async {
-    final response = await http.get(Uri.parse('${Apilink.url}cantiques'));
+    print("gzt ctq");
+   /*  final response = await http.get(Uri.parse('${Apilink.url}cantiques'));
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
       var datax = data['data'];
@@ -288,7 +289,7 @@ class saveSqflite {
       }
     } else {
       print(response.statusCode);
-    }
+    } */
   }
 
   

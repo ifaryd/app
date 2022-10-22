@@ -17,8 +17,8 @@ import 'MenuItems/Cantiques.dart';
 import 'MenuItems/Livre.dart';
 
 class Drawpage extends StatefulWidget {
-  const Drawpage({Key? key}) : super(key: key);
-
+  const Drawpage({Key? key, required this.Idlang}) : super(key: key);
+  final int Idlang;
   @override
   State<Drawpage> createState() => _DrawpageState();
 }
@@ -35,6 +35,7 @@ class _DrawpageState extends State<Drawpage> {
       } else if (index == 1) {
         Navigator.of(context).push(PageAnimationTransition(
             page: LivrePkp(
+              Idlang:widget.Idlang,
               title: 'Livre',
             ),
             pageAnimationType: RightToLeftTransition()));
@@ -65,6 +66,7 @@ class _DrawpageState extends State<Drawpage> {
       } else if (index == 6) {
         Navigator.of(context).push(PageAnimationTransition(
             page: Temoignages(
+              idx:widget.Idlang,
               title: 'Témoignages',
             ),
             pageAnimationType: RightToLeftTransition()));
